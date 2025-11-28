@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import ActivityCard from "./ActivityCard";
+import ActivityCard from "@/components/ActivityCard";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -21,8 +21,6 @@ export default function ActivityList() {
   if (error) {
     return <h1>Failed to load data.</h1>;
   }
-
-  console.log(activities);
 
   return (
     <>
