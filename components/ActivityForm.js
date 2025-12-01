@@ -1,6 +1,12 @@
 import useSWR from "swr";
 
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
 export default function ActivityForm() {
+  const { data: categories, error: categoriesError } = useSWR(
+    "/api/categories",
+    fetcher
+  );
   const { mutate } = useSWR("/api/activities");
 
   async function handleSubmit(event) {
@@ -23,6 +29,9 @@ export default function ActivityForm() {
       console.error("Failed to create activity");
     }
   }
+
+  if (!categories) return <p>Loading categories...</p>;
+  if (categoriesError) return <p>Failed to load categories.</p>;
 
   return (
     <>
@@ -47,16 +56,24 @@ export default function ActivityForm() {
 
         <label htmlFor="activity-categories">Choose a category:</label>
         <select id="activity-categories" name="categories" required>
+          {/*Dynamic mapping with category._id*/}
           <option value="">Please select a category</option>
-          <option value="outdoor">Outdoor</option>
+          {categories.map((category) => (
+            <option key={category._id} value={category._id}>
+              {category.name}
+            </option>
+          ))}
+          {/* <option value="outdoor">Outdoor</option>
           <option value="sport">Sport</option>
           <option value="water">Water</option>
           <option value="nature">Nature</option>
           <option value="adventure">Adventure</option>
-          <option value="winter">Winter</option>
+          <option value="winter">Winter</option> */}
         </select>
+
         <label htmlFor="activity-area">Area:</label>
         <input id="activity-area" type="text" name="area" />
+
         <label htmlFor="activity-country">Country:</label>
         <input id="activity-country" type="text" name="country" />
         <button type="submit">Submit</button>
