@@ -2,8 +2,7 @@ import ActivityInfo from "./ActivityInfo";
 
 export default function ActivityDetails({
   activity,
-  imageURL,
-  categories,
+  imageSource,
   onClick,
   id,
 }) {
@@ -13,7 +12,7 @@ export default function ActivityDetails({
     <>
       <ActivityInfo
         activity={activity}
-        imageURL={imageURL}
+        imageSource={imageSource}
         categories={activity.categories}
       />
       <button onClick={() => onClick(id)}>DELETE</button>

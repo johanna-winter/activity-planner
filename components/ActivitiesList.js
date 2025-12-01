@@ -17,7 +17,7 @@ export default function ActivityList() {
   if (!activities) {
     return;
   }
-  //test
+
 
   if (error) {
     return <h1>Failed to load data.</h1>;

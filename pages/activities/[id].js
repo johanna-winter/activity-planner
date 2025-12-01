@@ -14,17 +14,22 @@ export default function ActivityDetailPage() {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: activity, error } = useSWR(
-    router.isReady ? `/api/activities/${id}` : null,
-    fetcher // 👈 lokaler Fetcher
-  );
+  const {
+    data: activity,
+    error,
+    isLoading,
+  } = useSWR(router.isReady ? `/api/activities/${id}` : null, fetcher);
 
-  if (!router.isReady || (!activity && !error)) {
+  if (isLoading) {
     return <h1>Loading...</h1>;
   }
 
+  if (!activity) {
+    return <h1>Activity not found</h1>;
+  }
+
   if (error) {
-    return <h1>Not found</h1>;
+    return <h1>{error.message}</h1>;
   }
 
   async function handleDeleteActivity(id) {
