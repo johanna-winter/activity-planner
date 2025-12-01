@@ -6,12 +6,13 @@ export default function ActivityDetailPage() {
   const router = useRouter();
   const { id } = router.query;
 
-const { data: activity, error, isLoading } = useSWR(
-  id ? `/api/activities/${id}` : null
-);
+  const {
+    data: activity,
+    error,
+    isLoading,
+  } = useSWR(id ? `/api/activities/${id}` : null);
 
   if (!id || isLoading) {
-   
     return <h1>Loading...</h1>;
   }
 
@@ -19,11 +20,26 @@ const { data: activity, error, isLoading } = useSWR(
     return <h1>Not found</h1>;
   }
 
+  async function handleDeleteActivity(id) {
+    const response = await fetch(`/api/activities/${id}`, {
+      method: "DELETE",
+    });
 
+    if (response.ok) {
+      await response.json();
+      router.push("/");
+    } else {
+      console.log(response.status);
+    }
+  }
 
   return (
     <>
-      <ActivityDetails activity={activity} id={id} />
+      <ActivityDetails
+        activity={activity}
+        id={id}
+        onClick={handleDeleteActivity}
+      />
     </>
   );
 }
