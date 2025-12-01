@@ -72,6 +72,7 @@ export default function ActivityForm() {
           type="text"
           name="title"
           maxLength="50"
+          placeholder="Name your activity (e.g. Kayaking)"
           required
         />
 
@@ -81,6 +82,7 @@ export default function ActivityForm() {
           type="text"
           name="description"
           maxLength="300"
+          placeholder="Add a short description"
         />
 
         <Label htmlFor="activity-categories">Choose a category:</Label>
@@ -95,10 +97,20 @@ export default function ActivityForm() {
         </Select>
 
         <Label htmlFor="activity-area">Area:</Label>
-        <Input id="activity-area" type="text" name="area" />
+        <Input
+          id="activity-area"
+          type="text"
+          name="area"
+          placeholder="e.g. Alps, Black Forest, Lake District"
+        />
 
         <Label htmlFor="activity-country">Country:</Label>
-        <Input id="activity-country" type="text" name="country" />
+        <Input
+          id="activity-country"
+          type="text"
+          name="country"
+          placeholder="e.g. Switzerland, Germany, UK"
+        />
         <Button type="submit">Submit</Button>
       </Form>
     </>
