@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useSWR from "swr";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -7,7 +8,10 @@ export default function ActivityForm() {
     "/api/categories",
     fetcher
   );
-  const { mutate } = useSWR("/api/activities");
+  const { mutate } = useSWR("/api/activities", fetcher);
+
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -23,9 +27,13 @@ export default function ActivityForm() {
     });
 
     if (response.ok) {
+      setSuccessMessage("Your activity was added successfully!");
+      setErrorMessage("");
       mutate(); // re-fresh ActivitiesList
       event.target.reset();
     } else {
+      setErrorMessage("Something went wrong. Please try again.");
+      setSuccessMessage("");
       console.error("Failed to create activity");
     }
   }
@@ -36,6 +44,8 @@ export default function ActivityForm() {
   return (
     <>
       <h2>Add your activity</h2>
+      {successMessage && <p>{successMessage}</p>}
+      {errorMessage && <p>{errorMessage}</p>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="activity-title">Title:</label>
         <input
@@ -63,12 +73,6 @@ export default function ActivityForm() {
               {category.name}
             </option>
           ))}
-          {/* <option value="outdoor">Outdoor</option>
-          <option value="sport">Sport</option>
-          <option value="water">Water</option>
-          <option value="nature">Nature</option>
-          <option value="adventure">Adventure</option>
-          <option value="winter">Winter</option> */}
         </select>
 
         <label htmlFor="activity-area">Area:</label>
