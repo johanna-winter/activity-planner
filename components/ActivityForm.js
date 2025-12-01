@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import useSWR from "swr";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -64,9 +65,9 @@ export default function ActivityForm() {
       <h2>Add your activity</h2>
       {successMessage && <p>{successMessage}</p>}
       {errorMessage && <p>{errorMessage}</p>}
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="activity-title">Title:</label>
-        <input
+      <Form onSubmit={handleSubmit}>
+        <Label htmlFor="activity-title">Title:</Label>
+        <Input
           id="activity-title"
           type="text"
           name="title"
@@ -74,16 +75,16 @@ export default function ActivityForm() {
           required
         />
 
-        <label htmlFor="activity-description">Description:</label>
-        <input
+        <Label htmlFor="activity-description">Description:</Label>
+        <Input
           id="activity-description"
           type="text"
           name="description"
           maxLength="300"
         />
 
-        <label htmlFor="activity-categories">Choose a category:</label>
-        <select id="activity-categories" name="categories" required>
+        <Label htmlFor="activity-categories">Choose a category:</Label>
+        <Select id="activity-categories" name="categories" required>
           {/*Dynamic mapping with category._id*/}
           <option value="">Please select a category</option>
           {categories.map((category) => (
@@ -91,15 +92,40 @@ export default function ActivityForm() {
               {category.name}
             </option>
           ))}
-        </select>
+        </Select>
 
-        <label htmlFor="activity-area">Area:</label>
-        <input id="activity-area" type="text" name="area" />
+        <Label htmlFor="activity-area">Area:</Label>
+        <Input id="activity-area" type="text" name="area" />
 
-        <label htmlFor="activity-country">Country:</label>
-        <input id="activity-country" type="text" name="country" />
-        <button type="submit">Submit</button>
-      </form>
+        <Label htmlFor="activity-country">Country:</Label>
+        <Input id="activity-country" type="text" name="country" />
+        <Button type="submit">Submit</Button>
+      </Form>
     </>
   );
 }
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0 1rem;
+`;
+
+const Label = styled.label`
+  font-weight: bold;
+`;
+
+const Input = styled.input`
+  padding: 0.5rem;
+`;
+
+const Select = styled.select`
+  padding: 0.5rem;
+`;
+
+const Button = styled.button`
+  padding: 0.6rem 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+`;

@@ -11,7 +11,7 @@ export default async function handler(request, response) {
         .sort({ _id: -1 });
       return response.status(200).json(activities);
     } catch (error) {
-      console.error("GET /activites error: ".error);
+      console.error("GET /activities error: ".error);
       return response.status(500).json({ error: error.message });
     }
   }
