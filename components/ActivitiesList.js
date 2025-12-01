@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import ActivityCard from "@/components/ActivityCard";
+import Link from "next/link";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -40,6 +41,7 @@ export default function ActivityList() {
               imageSource={activity.imageUrl}
               categories={activity.categories}
             />
+            <Link href={`/activities/${activity._id}`}>Edit</Link>
           </li>
         ))}
       </ul>
