@@ -25,7 +25,7 @@ export default function ActivityList() {
 
   return (
     <>
-      <h1>Activities List</h1>
+      <h2>Activities List</h2>
       {activities.length === 0 && (
         <p>
           Sorry we couldn´t retrieve the latest activites at the moment. Please
