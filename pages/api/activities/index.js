@@ -11,25 +11,18 @@ export default async function handler(request, response) {
         .sort({ _id: -1 });
       return response.status(200).json(activities);
     } catch (error) {
-      console.error("GET /activities error: ".error);
+      console.error("GET /activities error: ", error);
       return response.status(500).json({ error: error.message });
     }
   }
   if (request.method === "POST") {
     try {
       const activityData = request.body;
-      // Turn categories input from string into array
-      if (typeof activityData.categories === "string") {
-        activityData.categories = [activityData.categories];
-        console.log("request.body: ", request.body);
-      }
-      const newActivity = await Activity.create(activityData);
-      const newActivityWithCategories = await Activity.findById(
-        newActivity._id
-      ).populate("categories");
+
+      await Activity.create(activityData);
+
       return response.status(201).json({
         status: "Activity successfully created!",
-        activity: newActivityWithCategories,
       });
     } catch (error) {
       return response.status(400).json({ error: error.message });

@@ -5,10 +5,11 @@ import useSWR from "swr";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function ActivityForm() {
-  const { data: categories, error: categoriesError } = useSWR(
-    "/api/categories",
-    fetcher
-  );
+  const {
+    data: categories,
+    error: categoriesError,
+    isLoading: categoriesLoading,
+  } = useSWR("/api/categories", fetcher);
   const { mutate } = useSWR("/api/activities", fetcher);
 
   const [successMessage, setSuccessMessage] = useState("");
@@ -36,8 +37,11 @@ export default function ActivityForm() {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    const activityData = Object.fromEntries(formData);
-    console.log(activityData);
+    const categoriesArray = formData.getAll("categories");
+    const activityData = {
+      ...Object.fromEntries(formData),
+      categories: categoriesArray,
+    };
 
     const response = await fetch("/api/activities", {
       method: "POST",
@@ -48,7 +52,7 @@ export default function ActivityForm() {
     if (response.ok) {
       setSuccessMessage("Your activity was added successfully!");
       setErrorMessage("");
-      mutate(); // re-fresh ActivitiesList
+      mutate();
       event.target.reset();
     } else {
       setErrorMessage("Something went wrong. Please try again.");
@@ -57,14 +61,16 @@ export default function ActivityForm() {
     }
   }
 
-  if (!categories) return <p>Loading categories...</p>;
+  if (categoriesLoading) return <p>Loading categories...</p>;
   if (categoriesError) return <p>Failed to load categories.</p>;
 
   return (
     <>
       <h2>Add your activity</h2>
-      {successMessage && <p>{successMessage}</p>}
-      {errorMessage && <p>{errorMessage}</p>}
+      {successMessage && (
+        <StatusMessage $success>{successMessage}</StatusMessage>
+      )}
+      {errorMessage && <StatusMessage>{errorMessage}</StatusMessage>}
       <Form onSubmit={handleSubmit}>
         <Label htmlFor="activity-title">Title:</Label>
         <Input
@@ -86,8 +92,7 @@ export default function ActivityForm() {
         />
 
         <Label htmlFor="activity-categories">Choose a category:</Label>
-        <Select id="activity-categories" name="categories" required>
-          {/*Dynamic mapping with category._id*/}
+        <Select id="activity-categories" name="categories" multiple required>
           <option value="">Please select a category</option>
           {categories.map((category) => (
             <option key={category._id} value={category._id}>
@@ -140,4 +145,13 @@ const Button = styled.button`
   padding: 0.6rem 1rem;
   margin-top: 1rem;
   cursor: pointer;
+`;
+
+const StatusMessage = styled.p`
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  background-color: ${(props) => (props.$success ? "#e6ffe6" : "#ffe6e6")};
+  border: 1px solid ${(props) => (props.$success ? "#00a000" : "#d00000")};
+  color: ${(props) => (props.$success ? "#008000" : "#b00000")};
 `;
