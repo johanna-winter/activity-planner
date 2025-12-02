@@ -1,18 +1,3 @@
-// import Image from "next/image";
-
-// export default function ActivityCard({ title, imageSource, categories }) {
-//   return (
-//     <>
-//       <p>{title}</p>
-//       <Image src={imageSource} alt={title} width={240} height={330} />
-//       {categories.map((category) => (
-//         <p key={category._id}>{category.name}</p>
-//       ))}
-//     </>
-//   );
-// }
-
-
 import { useState } from "react";
 import Image from "next/image";
 import useSWR from "swr";
@@ -28,7 +13,6 @@ export default function ActivityCard({
 }) {
   const [isEditing, setIsEditing] = useState(false);
 
-  // form local state
   const [formTitle, setFormTitle] = useState(title);
   const [formCategory, setFormCategory] = useState(
     categories[0]?._id || ""
@@ -36,7 +20,6 @@ export default function ActivityCard({
 
   const [error, setError] = useState("");
 
-  // categories for dropdown
   const { data: allCategories } = useSWR("/api/categories", fetcher);
 
   async function handleSave(e) {
@@ -79,7 +62,6 @@ export default function ActivityCard({
     setError("");
   }
 
-  // ---------- VIEW MODE ----------
   if (!isEditing) {
     return (
       <div>
@@ -94,7 +76,6 @@ export default function ActivityCard({
     );
   }
 
-  // ---------- EDIT MODE ----------
   return (
     <div>
       <h3>Edit Activity</h3>

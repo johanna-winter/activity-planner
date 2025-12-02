@@ -12,16 +12,15 @@ export default function ActivityList() {
   } = useSWR("/api/activities", fetcher);
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Failed to load data.</p>;
   }
 
   if (!activities) {
-    return;
-  }
-  //test
-
-  if (error) {
-    return <h1>Failed to load data.</h1>;
+    return null;
   }
 
   function handleActivityUpdated(updatedActivity) {
