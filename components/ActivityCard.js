@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import useSWR from "swr";
 
-const fetcher = (...args) => fetch(...args).then(res => res.json());
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function ActivityCard({
   id,
@@ -14,8 +14,8 @@ export default function ActivityCard({
   const [isEditing, setIsEditing] = useState(false);
 
   const [formTitle, setFormTitle] = useState(title);
-  const [formCategory, setFormCategory] = useState(
-    categories[0]?._id || ""
+  const [formCategories, setFormCategories] = useState(
+    categories.map((c) => c._id)
   );
 
   const [error, setError] = useState("");
@@ -26,13 +26,15 @@ export default function ActivityCard({
     e.preventDefault();
     setError("");
 
-    if (!formTitle.trim()) {
+    const trimmedTitle = formTitle.trim();
+
+    if (!trimmedTitle) {
       setError("Title is required");
       return;
     }
 
-    if (!formCategory) {
-      setError("Please select a category");
+    if (!formCategories || formCategories.length === 0) {
+      setError("Please select at least one category");
       return;
     }
 
@@ -40,8 +42,8 @@ export default function ActivityCard({
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        title: formTitle.trim(),
-        categories: [formCategory],
+        title: trimmedTitle,
+        categories: formCategories,
       }),
     });
 
@@ -58,7 +60,7 @@ export default function ActivityCard({
   function handleCancel() {
     setIsEditing(false);
     setFormTitle(title);
-    setFormCategory(categories[0]?._id || "");
+    setFormCategories(categories.map((c) => c._id));
     setError("");
   }
 
@@ -71,7 +73,9 @@ export default function ActivityCard({
       ))}
 
       {!isEditing && (
-        <button onClick={() => setIsEditing(true)}>Edit</button>
+        <button type="button" onClick={() => setIsEditing(true)}>
+          Edit
+        </button>
       )}
 
       {isEditing && (
@@ -90,13 +94,18 @@ export default function ActivityCard({
             </label>
 
             <label>
-              Category
+              Categories
               <select
-                value={formCategory}
-                onChange={(e) => setFormCategory(e.target.value)}
+                multiple
+                value={formCategories}
+                onChange={(e) =>
+                  setFormCategories(
+                    Array.from(e.target.selectedOptions).map(
+                      (option) => option.value
+                    )
+                  )
+                }
               >
-                <option value="">Please select a category</option>
-
                 {allCategories?.map((cat) => (
                   <option key={cat._id} value={cat._id}>
                     {cat.name}
