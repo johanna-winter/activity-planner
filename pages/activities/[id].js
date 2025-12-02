@@ -51,7 +51,7 @@ export default function ActivityDetailPage() {
     <ActivityDetails
       activity={activity}
       id={id}
-      onClick={handleDeleteActivity}
+      onDeleteActivity={handleDeleteActivity}
     />
   );
 }

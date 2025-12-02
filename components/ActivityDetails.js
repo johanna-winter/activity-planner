@@ -1,16 +1,10 @@
 import ActivityInfo from "./ActivityInfo";
 
-export default function ActivityDetails({ activity, onClick, id }) {
-  console.log("logged activity:", activity);
-
+export default function ActivityDetails({ activity, onDeleteActivity, id }) {
   return (
     <>
-      <ActivityInfo
-        activity={activity}
-        imageURL={activity.imageURL}
-        categories={activity.categories}
-      />
-      <button onClick={() => onClick(id)}>DELETE</button>
+      <ActivityInfo activity={activity} />
+      <button onClick={() => onDeleteActivity(id)}>DELETE</button>
     </>
   );
 }

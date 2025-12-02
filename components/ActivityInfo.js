@@ -1,14 +1,14 @@
 import Image from "next/image";
 
-export default function ActivityInfo({ activity, imageSource, categories }) {
+export default function ActivityInfo({ activity }) {
   return (
     <>
       <h1>See more Details of your selected activity</h1>
       <h2>{activity.title}</h2>
-      <Image alt={activity.title} src={imageSource} />
+      <Image alt={activity.title} src={activity.imageSource} />
       <p>{activity.description}</p>
       <ul>
-        {categories.map((category) => (
+        {activity.categories.map((category) => (
           <li key={category._id}>{category.name}</li>
         ))}
       </ul>
