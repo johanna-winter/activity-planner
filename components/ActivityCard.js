@@ -62,56 +62,56 @@ export default function ActivityCard({
     setError("");
   }
 
-  if (!isEditing) {
-    return (
-      <div>
-        <p>{title}</p>
-        <Image src={imageSource} alt={title} width={240} height={330} />
-        {categories.map(c => (
-          <p key={c._id}>{c.name}</p>
-        ))}
-
-        <button onClick={() => setIsEditing(true)}>Edit</button>
-      </div>
-    );
-  }
-
   return (
     <div>
-      <h3>Edit Activity</h3>
+      <p>{title}</p>
+      <Image src={imageSource} alt={title} width={240} height={330} />
+      {categories.map((c) => (
+        <p key={c._id}>{c.name}</p>
+      ))}
 
-      {error && <p>{error}</p>}
+      {!isEditing && (
+        <button onClick={() => setIsEditing(true)}>Edit</button>
+      )}
 
-      <form onSubmit={handleSave}>
-        <label>
-          Title
-          <input
-            value={formTitle}
-            onChange={e => setFormTitle(e.target.value)}
-          />
-        </label>
+      {isEditing && (
+        <>
+          <h3>Edit Activity</h3>
 
-        <label>
-          Category
-          <select
-            value={formCategory}
-            onChange={e => setFormCategory(e.target.value)}
-          >
-            <option value="">Please select a category</option>
+          {error && <p>{error}</p>}
 
-            {allCategories?.map(cat => (
-              <option key={cat._id} value={cat._id}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
-        </label>
+          <form onSubmit={handleSave}>
+            <label>
+              Title
+              <input
+                value={formTitle}
+                onChange={(e) => setFormTitle(e.target.value)}
+              />
+            </label>
 
-        <button type="submit">Save</button>
-        <button type="button" onClick={handleCancel}>
-          Cancel
-        </button>
-      </form>
+            <label>
+              Category
+              <select
+                value={formCategory}
+                onChange={(e) => setFormCategory(e.target.value)}
+              >
+                <option value="">Please select a category</option>
+
+                {allCategories?.map((cat) => (
+                  <option key={cat._id} value={cat._id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <button type="submit">Save</button>
+            <button type="button" onClick={handleCancel}>
+              Cancel
+            </button>
+          </form>
+        </>
+      )}
     </div>
   );
 }
