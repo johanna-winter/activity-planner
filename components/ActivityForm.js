@@ -71,9 +71,9 @@ export default function ActivityForm() {
         <StatusMessage $success>{successMessage}</StatusMessage>
       )}
       {errorMessage && <StatusMessage>{errorMessage}</StatusMessage>}
-      <Form onSubmit={handleSubmit}>
-        <Label htmlFor="activity-title">Title:</Label>
-        <Input
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledLabel htmlFor="activity-title">Title:</StyledLabel>
+        <StyledInput
           id="activity-title"
           type="text"
           name="title"
@@ -82,8 +82,8 @@ export default function ActivityForm() {
           required
         />
 
-        <Label htmlFor="activity-description">Description:</Label>
-        <Input
+        <StyledLabel htmlFor="activity-description">Description:</StyledLabel>
+        <StyledInput
           id="activity-description"
           type="text"
           name="description"
@@ -91,57 +91,64 @@ export default function ActivityForm() {
           placeholder="Add a short description"
         />
 
-        <Label htmlFor="activity-categories">Choose a category:</Label>
-        <Select id="activity-categories" name="categories" multiple required>
-          <option value="">Please select a category</option>
-          {categories.map((category) => (
-            <option key={category._id} value={category._id}>
-              {category.name}
-            </option>
-          ))}
-        </Select>
+        <CategoryGroup>
+          <CategoryLegend>Choose categories:</CategoryLegend>
+          <CategoryList>
+            {categories.map((category) => (
+              <CategoryItem key={category._id}>
+                <CategoryLabel>
+                  <StyledInput
+                    type="checkbox"
+                    id="activity-categories"
+                    name="categories"
+                    value={category._id}
+                    multiple
+                    required
+                  />
+                  {category.name}
+                </CategoryLabel>
+              </CategoryItem>
+            ))}
+          </CategoryList>
+        </CategoryGroup>
 
-        <Label htmlFor="activity-area">Area:</Label>
-        <Input
+        <StyledLabel htmlFor="activity-area">Area:</StyledLabel>
+        <StyledInput
           id="activity-area"
           type="text"
           name="area"
           placeholder="e.g. Alps, Black Forest, Lake District"
         />
 
-        <Label htmlFor="activity-country">Country:</Label>
-        <Input
+        <StyledLabel htmlFor="activity-country">Country:</StyledLabel>
+        <StyledInput
           id="activity-country"
           type="text"
           name="country"
           placeholder="e.g. Switzerland, Germany, UK"
         />
-        <Button type="submit">Submit</Button>
-      </Form>
+        <StyledButton type="submit">Submit</StyledButton>
+      </StyledForm>
     </>
   );
 }
 
-const Form = styled.form`
+const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   padding: 0 1rem;
 `;
 
-const Label = styled.label`
+const StyledLabel = styled.label`
   font-weight: bold;
 `;
 
-const Input = styled.input`
+const StyledInput = styled.input`
   padding: 0.5rem;
 `;
 
-const Select = styled.select`
-  padding: 0.5rem;
-`;
-
-const Button = styled.button`
+const StyledButton = styled.button`
   padding: 0.6rem 1rem;
   margin-top: 1rem;
   cursor: pointer;
@@ -154,4 +161,36 @@ const StatusMessage = styled.p`
   background-color: ${(props) => (props.$success ? "#e6ffe6" : "#ffe6e6")};
   border: 1px solid ${(props) => (props.$success ? "#00a000" : "#d00000")};
   color: ${(props) => (props.$success ? "#008000" : "#b00000")};
+`;
+
+const CategoryGroup = styled.fieldset`
+  border: none;
+  padding: 0;
+  margin: 1rem 0;
+`;
+
+const CategoryLegend = styled.legend`
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+`;
+
+const CategoryList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+`;
+
+const CategoryItem = styled.li`
+  display: flex;
+  align-items: center;
+`;
+
+const CategoryLabel = styled.label`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;
