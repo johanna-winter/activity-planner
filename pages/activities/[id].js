@@ -18,7 +18,14 @@ export default function ActivityDetailPage() {
     data: activity,
     error,
     isLoading,
+<<<<<<< HEAD
   } = useSWR(router.isReady ? `/api/activities/${id}` : null, fetcher);
+=======
+  } = useSWR(
+    router.isReady ? `/api/activities/${id}` : null,
+    fetcher // 👈 lokaler Fetcher
+  );
+>>>>>>> delete-activity
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -38,10 +45,9 @@ export default function ActivityDetailPage() {
     });
 
     if (response.ok) {
-      await response.json();
       router.push("/");
     } else {
-      console.log(response.status);
+      return alert("Something went wrong. Please try again.");
     }
   }
 
@@ -49,5 +55,5 @@ export default function ActivityDetailPage() {
     return <h1>Activity not found</h1>;
   }
 
-  return <ActivityDetails activity={activity} onClick={handleDeleteActivity} />;
+  return <ActivityDetails activity={activity} onDeleteActivity={handleDeleteActivity} />;
 }
