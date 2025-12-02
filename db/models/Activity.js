@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 const activitySchema = new Schema({
   title: { type: String, required: true, minlength: 3 },
   imageUrl: { type: String, required: true, default: "/placeholder.png" },
-  categories: { type: [Schema.Types.ObjectId], ref: "Category" },
+  categories: { type: [Schema.Types.ObjectId], ref: "Category", required: true },
   description: { type: String },
   area: { type: String },
   country: { type: String },
