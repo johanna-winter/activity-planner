@@ -14,12 +14,16 @@ export default function ActivityDetailPage() {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: activity, error } = useSWR(
+  const {
+    data: activity,
+    error,
+    isLoading,
+  } = useSWR(
     router.isReady ? `/api/activities/${id}` : null,
     fetcher // 👈 lokaler Fetcher
   );
 
-  if (!router.isReady || (!activity && !error)) {
+  if (isLoading) {
     return <h1>Loading...</h1>;
   }
 
@@ -33,10 +37,9 @@ export default function ActivityDetailPage() {
     });
 
     if (response.ok) {
-      await response.json();
       router.push("/");
     } else {
-      console.log(response.status);
+      return alert("Something went wrong. Please try again.");
     }
   }
 
@@ -46,10 +49,8 @@ export default function ActivityDetailPage() {
 
   return (
     <ActivityDetails
-      imageSource={activity.imageUrl}
       activity={activity}
       id={id}
-      categories={activity.categories}
       onClick={handleDeleteActivity}
     />
   );
