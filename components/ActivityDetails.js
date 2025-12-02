@@ -1,21 +1,15 @@
+import styled from "styled-components";
 import ActivityInfo from "./ActivityInfo";
 
-export default function ActivityDetails({
-  activity,
-  imageSource,
-  onClick,
-  id,
-}) {
-  console.log("logged activity:", activity);
-
+export default function ActivityDetails({ activity, onClick }) {
   return (
-    <>
-      <ActivityInfo
-        activity={activity}
-        imageSource={imageSource}
-        categories={activity.categories}
-      />
+    <StyledMain>
+      <ActivityInfo activity={activity} />
       <button onClick={() => onClick(id)}>DELETE</button>
-    </>
+    </StyledMain>
   );
 }
+
+const StyledMain = styled.main`
+  margin: 1rem;
+`;

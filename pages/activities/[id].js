@@ -49,13 +49,5 @@ export default function ActivityDetailPage() {
     return <h1>Activity not found</h1>;
   }
 
-  return (
-    <ActivityDetails
-      imageSource={activity.imageUrl}
-      activity={activity}
-      id={id}
-      categories={activity.categories}
-      onClick={handleDeleteActivity}
-    />
-  );
+  return <ActivityDetails activity={activity} onClick={handleDeleteActivity} />;
 }

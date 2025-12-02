@@ -1,12 +1,17 @@
 import ActivityList from "@/components/ActivitiesList";
 import ActivityForm from "@/components/ActivityForm";
+import styled from "styled-components";
 
 export default function HomePage() {
   return (
-    <div>
+    <StyledMain>
       <h1>Activity Planner</h1>
       <ActivityForm />
       <ActivityList />
-    </div>
+    </StyledMain>
   );
 }
+
+const StyledMain = styled.main`
+  margin: 1rem;
+`;

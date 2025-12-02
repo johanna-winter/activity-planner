@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function ActivityCard({ title, imageSource, categories, id }) {
-  console.log("logged id:", id);
   return (
     <>
       <p>{title}</p>
