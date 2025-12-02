@@ -18,14 +18,7 @@ export default function ActivityDetailPage() {
     data: activity,
     error,
     isLoading,
-<<<<<<< HEAD
   } = useSWR(router.isReady ? `/api/activities/${id}` : null, fetcher);
-=======
-  } = useSWR(
-    router.isReady ? `/api/activities/${id}` : null,
-    fetcher // 👈 lokaler Fetcher
-  );
->>>>>>> delete-activity
 
   if (isLoading) {
     return <h1>Loading...</h1>;
