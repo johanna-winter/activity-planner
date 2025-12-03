@@ -38,6 +38,12 @@ export default function ActivityForm() {
 
     const formData = new FormData(event.target);
     const categoriesArray = formData.getAll("categories");
+
+    if (categoriesArray.length === 0) {
+      setErrorMessage("Please select at least one category.");
+      return;
+    }
+
     const activityData = {
       ...Object.fromEntries(formData),
       categories: categoriesArray,
@@ -103,7 +109,6 @@ export default function ActivityForm() {
                     name="categories"
                     value={category._id}
                     multiple
-                    required
                   />
                   {category.name}
                 </CategoryLabel>

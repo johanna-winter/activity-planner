@@ -23,7 +23,6 @@ export default function ActivityList() {
     return;
   }
 
-
   function handleActivityUpdated(updatedActivity) {
     mutate(
       (oldActivities) =>
@@ -38,7 +37,7 @@ export default function ActivityList() {
       <h2>Activities List</h2>
       {activities.length === 0 && (
         <p>
-          Sorry we couldn´t retrieve the latest activites at the moment. Please
+          Sorry we couldn´t retrieve the latest activities at the moment. Please
           try again later.
         </p>
       )}
