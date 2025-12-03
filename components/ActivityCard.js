@@ -2,6 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import useSWR from "swr";
 import Link from "next/link";
+import styled from "styled-components";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -69,12 +70,11 @@ export default function ActivityCard({
     <div>
       <p>{title}</p>
       <Link href={`/activities/${id}`}>
-        <Image src={imageSource} alt={title} width={240} height={330} />
+        <StyledImage src={imageSource} alt={title} width={1200} height={900} />
       </Link>
       {categories.map((category) => (
         <>
           <p key={category._id}>{category.name}</p>
-         
         </>
       ))}
 
@@ -130,3 +130,11 @@ export default function ActivityCard({
     </div>
   );
 }
+
+const StyledImage = styled(Image)`
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover;
+  border-radius: 8px;
+  max-width: 500px;
+`;
