@@ -8,10 +8,15 @@ export default function ActivityList() {
     data: activities,
     isLoading,
     error,
+    mutate,
   } = useSWR("/api/activities", fetcher);
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Failed to load data.</p>;
   }
 
   if (!activities) {
@@ -19,10 +24,15 @@ export default function ActivityList() {
   }
 
 
-  if (error) {
-    return <h1>Failed to load data.</h1>;
+  function handleActivityUpdated(updatedActivity) {
+    mutate(
+      (oldActivities) =>
+        oldActivities.map((activity) =>
+          activity._id === updatedActivity._id ? updatedActivity : activity
+        ),
+      false
+    );
   }
-
   return (
     <>
       <h2>Activities List</h2>
@@ -36,10 +46,14 @@ export default function ActivityList() {
         {activities.map((activity) => (
           <li key={activity._id}>
             <ActivityCard
+              id={activity._id}
               title={activity.title}
               imageSource={activity.imageUrl}
               categories={activity.categories}
-              id={activity._id}
+              description={activity.description}
+              area={activity.area}
+              country={activity.country}
+              onActivityUpdated={handleActivityUpdated}
             />
           </li>
         ))}

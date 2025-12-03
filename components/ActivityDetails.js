@@ -5,7 +5,7 @@ export default function ActivityDetails({ activity, onDeleteActivity }) {
   return (
     <StyledMain>
       <ActivityInfo activity={activity} />
-      <button onClick={() => onDeleteActivity(id)}>DELETE</button>
+      <button onClick={() => onDeleteActivity(activity.id)}>DELETE</button>
     </StyledMain>
   );
 }
