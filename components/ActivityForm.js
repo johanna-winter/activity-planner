@@ -71,15 +71,16 @@ export default function ActivityForm() {
   if (categoriesError) return <p>Failed to load categories.</p>;
 
   return (
-    <>
-      <h2>Add your activity</h2>
+    <FormWrapper>
+      <FormCard>
+      <FormTitle>Add your activity</FormTitle>
       {successMessage && (
         <StatusMessage $success>{successMessage}</StatusMessage>
       )}
       {errorMessage && <StatusMessage>{errorMessage}</StatusMessage>}
       <StyledForm onSubmit={handleSubmit}>
         <StyledLabel htmlFor="activity-title">Title:</StyledLabel>
-        <StyledInput
+        <TextInput
           id="activity-title"
           type="text"
           name="title"
@@ -89,7 +90,7 @@ export default function ActivityForm() {
         />
 
         <StyledLabel htmlFor="activity-description">Description:</StyledLabel>
-        <StyledInput
+        <TextInput
           id="activity-description"
           type="text"
           name="description"
@@ -103,7 +104,7 @@ export default function ActivityForm() {
             {categories.map((category) => (
               <CategoryItem key={category._id}>
                 <CategoryLabel>
-                  <StyledInput
+                  <CheckboxInput
                     type="checkbox"
                     id="activity-categories"
                     name="categories"
@@ -118,7 +119,7 @@ export default function ActivityForm() {
         </CategoryGroup>
 
         <StyledLabel htmlFor="activity-area">Area:</StyledLabel>
-        <StyledInput
+        <TextInput
           id="activity-area"
           type="text"
           name="area"
@@ -126,46 +127,104 @@ export default function ActivityForm() {
         />
 
         <StyledLabel htmlFor="activity-country">Country:</StyledLabel>
-        <StyledInput
+        <TextInput
           id="activity-country"
           type="text"
           name="country"
           placeholder="e.g. Switzerland, Germany, UK"
         />
-        <StyledButton type="submit">Submit</StyledButton>
+        <ButtonRow>
+        <SubmitButton type="submit">Submit</SubmitButton>
+        </ButtonRow>
       </StyledForm>
-    </>
+      </FormCard>
+    </FormWrapper>
   );
 }
+
+/* ----------------- STYLES ----------------- */
+
+const FormWrapper = styled.div`
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem;
+  background-color: #d8f2e6; /* мягкий мятный фон */
+  border-radius: 16px;
+`;
+
+const FormCard = styled.div`
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem 1.8rem 2.4rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border-top: 8px solid #7abfbf; /* бирюзовый акцент */
+`;
+
+const FormTitle = styled.h2`
+  text-align: center;
+  color: #1e1226;
+  margin-bottom: 1.5rem;
+`;
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding: 0 1rem;
 `;
 
 const StyledLabel = styled.label`
   font-weight: bold;
+  color: #1e1226;
 `;
 
-const StyledInput = styled.input`
-  padding: 0.5rem;
+const TextInput = styled.input`
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid #7abfbf;
+  background-color: #f9fdfb;
+  margin-bottom: 0.3rem;
+
+  &:focus {
+    outline: none;
+    border-color: #44a66e;
+    box-shadow: 0 0 0 2px rgba(68, 166, 110, 0.25);
+  }
 `;
 
-const StyledButton = styled.button`
-  padding: 0.6rem 1rem;
-  margin-top: 1rem;
+const CheckboxInput = styled.input`
+  width: 1rem;
+  height: 1rem;
   cursor: pointer;
+`;
+
+const ButtonRow = styled.div`
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const SubmitButton = styled.button`
+  padding: 0.6rem 1.4rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #44a66e;
+  color: #ffffff;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #368757;
+  }
 `;
 
 const StatusMessage = styled.p`
   padding: 0.75rem 1rem;
-  border-radius: 6px;
-  font-weight: bold;
-  background-color: ${(props) => (props.$success ? "#e6ffe6" : "#ffe6e6")};
-  border: 1px solid ${(props) => (props.$success ? "#00a000" : "#d00000")};
-  color: ${(props) => (props.$success ? "#008000" : "#b00000")};
+  border-radius: 10px;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  background-color: ${(props) => (props.$success ? "#e5f9f0" : "#ffe6e6")};
+  border: 1px solid ${(props) => (props.$success ? "#44a66e" : "#d00000")};
+  color: ${(props) => (props.$success ? "#1e1226" : "#b00000")};
 `;
 
 const CategoryGroup = styled.fieldset`
@@ -177,15 +236,19 @@ const CategoryGroup = styled.fieldset`
 const CategoryLegend = styled.legend`
   font-weight: bold;
   margin-bottom: 0.5rem;
+  color: #1e1226;
 `;
 
 const CategoryList = styled.ul`
   list-style: none;
-  padding: 0;
+  padding: 0.75rem 0.9rem;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.35rem;
+  background-color: #f9fdfb;
+  border-radius: 12px;
+  border: 1px solid #7abfbf;
 `;
 
 const CategoryItem = styled.li`
@@ -198,4 +261,5 @@ const CategoryLabel = styled.label`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: #1e1226;
 `;

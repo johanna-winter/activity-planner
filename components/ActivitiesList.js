@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import ActivityCard from "@/components/ActivityCard";
+import styled from "styled-components";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -33,17 +34,17 @@ export default function ActivityList() {
     );
   }
   return (
-    <>
-      <h2>Activities List</h2>
+    <Wrapper>
+      <Title>Activities List</Title>
       {activities.length === 0 && (
-        <p>
+        <Message>
           Sorry we couldn´t retrieve the latest activities at the moment. Please
           try again later.
-        </p>
+        </Message>
       )}
-      <ul>
+      <List>
         {activities.map((activity) => (
-          <li key={activity._id}>
+          <ListItem key={activity._id}>
             <ActivityCard
               id={activity._id}
               title={activity.title}
@@ -54,9 +55,45 @@ export default function ActivityList() {
               country={activity.country}
               onActivityUpdated={handleActivityUpdated}
             />
-          </li>
+          </ListItem>
         ))}
-      </ul>
-    </>
+      </List>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #d8f2e6;
+  border-radius: 16px;
+`;
+
+const Title = styled.h2`
+  text-align: center;
+  color: #1e1226;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+`;
+
+const Message = styled.p`
+  color: #1e1226;
+  background: #fce2e2;
+  border-left: 6px solid #bf9f63;
+  padding: 1rem;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 1rem auto 2rem;
+  text-align: center;
+`;
+
+const List = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+
+const ListItem = styled.li`
+  margin-bottom: 2rem;
+`;
