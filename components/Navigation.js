@@ -12,7 +12,7 @@ export default function NavigationBar() {
   const router = useRouter();
 
   return (
-    <Nav role="navigation" aria-label="Main navigation">
+    <Nav aria-label="Main navigation">
       <NavList>
         <NavItem $highlighted={router.pathname === "/"} title="Home">
           <NavLink
