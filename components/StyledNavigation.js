@@ -1,8 +1,8 @@
+import Link from "next/link";
 import styled from "styled-components";
 
 export const Nav = styled.nav`
   background-color: #7abfbf;
-  color: #0d0d0d;
   position: fixed;
   width: 100%;
   height: 80px;
@@ -15,7 +15,6 @@ export const NavList = styled.ul`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  gap: 2rem;
   width: 100%;
   height: 100%;
   list-style: none;
@@ -23,4 +22,14 @@ export const NavList = styled.ul`
   padding: 0;
 `;
 
-export const NavItem = styled.li``;
+export const NavItem = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const NavLink = styled(Link)`
+  text-decoration: none;
+  color: #1e1236;
+  cursor: pointer;
+`;

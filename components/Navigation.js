@@ -1,15 +1,19 @@
-import Link from "next/link";
-import { Nav, NavItem, NavList } from "./StyledNavigation";
+import { Nav, NavItem, NavLink, NavList } from "./StyledNavigation";
+import { House, Heart } from "lucide-react";
 
 export default function NavigationBar() {
   return (
     <Nav>
       <NavList>
         <NavItem>
-          <Link href="/">Home</Link>
+          <NavLink href="/">
+            <House />
+          </NavLink>
         </NavItem>
         <NavItem>
-          <Link href="/favourites">Favourites</Link>
+          <NavLink href="/favourites">
+            <Heart />
+          </NavLink>
         </NavItem>
       </NavList>
     </Nav>
