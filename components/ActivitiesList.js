@@ -1,9 +1,10 @@
 import useSWR from "swr";
 import ActivityCard from "@/components/ActivityCard";
+import Filter from "./Filter";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function ActivityList({ query }) {
+export default function ActivityList({ query, setQuery }) {
   const {
     data: activities,
     isLoading,
@@ -35,6 +36,7 @@ export default function ActivityList({ query }) {
   return (
     <>
       <h2>Activities List</h2>
+      <Filter setQuery={setQuery} />
       {filteredActivities.length === 0 && (
         <p>
           Sorry we couldn´t retrieve the latest activites at the moment. Please

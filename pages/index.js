@@ -9,9 +9,8 @@ export default function HomePage() {
   return (
     <StyledMain>
       <h1>Activity Planner</h1>
-      <Filter setQuery={setQuery} />
       <ActivityForm />
-      <ActivityList query={query} />
+      <ActivityList query={query} setQuery={setQuery} />
     </StyledMain>
   );
 }
