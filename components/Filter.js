@@ -12,8 +12,6 @@ export default function Filter({ setQuery }) {
     } else {
       setQuery("");
     }
-
-    console.log(data);
   }
   return (
     <>
