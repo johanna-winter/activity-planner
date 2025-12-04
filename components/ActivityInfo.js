@@ -10,11 +10,11 @@ export default function ActivityInfo({ activity }) {
       <BackButton />
       <h2>{activity.title}</h2>
 
-      <Image
+      <StyledImage
         alt={activity.title}
         src={activity.imageUrl}
-        width={240}
-        height={330}
+        width={1200}
+        height={900}
       />
 
       <StyledP>
@@ -42,4 +42,12 @@ export default function ActivityInfo({ activity }) {
 
 const StyledP = styled.p`
   margin-bottom: 2rem;
+`;
+
+const StyledImage = styled(Image)`
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover;
+  border-radius: 8px;
+  max-width: 600px;
 `;
