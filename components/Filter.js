@@ -1,17 +1,16 @@
 import { useState } from "react";
 
-export default function Filter() {
-  
+export default function Filter({ setQuery }) {
   function handleSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    if (data.query) {
-        setQuery(data.query)
+    if (data.filter) {
+      setQuery(data.filter);
     } else {
-        setQuery("")
+      setQuery("");
     }
 
     console.log(data);

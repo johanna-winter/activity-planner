@@ -15,7 +15,7 @@ export default async function handler(request, response) {
       return response.status(500).json({ error: error.message });
     }
   }
-  if (request.method === "POST") {
+  if (request.method === "POST") { 
     try {
       const activityData = request.body;
 
