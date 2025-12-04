@@ -12,15 +12,28 @@ export default function NavigationBar() {
   const router = useRouter();
 
   return (
-    <Nav>
+    <Nav role="navigation" aria-label="Main navigation">
       <NavList>
-        <NavItem $highlighted={router.pathname === "/"}>
-          <NavLink href="/">
+        <NavItem $highlighted={router.pathname === "/"} title="Home">
+          <NavLink
+            href="/"
+            aria-label="Home"
+            aria-current={router.pathname === "/" ? "page" : undefined}
+          >
             <StyledHouse $highlighted={router.pathname === "/"} />
           </NavLink>
         </NavItem>
-        <NavItem $highlighted={router.pathname === "/favourites"}>
-          <NavLink href="/favourites">
+        <NavItem
+          $highlighted={router.pathname === "/favourites"}
+          title="Favourites"
+        >
+          <NavLink
+            href="/favourites"
+            aria-label="Favourites"
+            aria-current={
+              router.pathname === "/favourites" ? "page" : undefined
+            }
+          >
             <StyledHeart $highlighted={router.pathname === "/favourites"} />
           </NavLink>
         </NavItem>
