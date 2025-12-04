@@ -101,23 +101,31 @@ export default function ActivityCard({
 
             <label>
               Categories
-              <select
-                multiple
-                value={formCategories}
-                onChange={(e) =>
-                  setFormCategories(
-                    Array.from(e.target.selectedOptions).map(
-                      (option) => option.value
-                    )
-                  )
-                }
-              >
+              <div>
                 {allCategories?.map((cat) => (
-                  <option key={cat._id} value={cat._id}>
+                  <label
+                    key={cat._id}
+                    style={{ display: "block", cursor: "pointer" }}
+                  >
+                    <input
+                      type="checkbox"
+                      name="categories"
+                      value={cat._id}
+                      checked={formCategories.includes(cat._id)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setFormCategories([...formCategories, cat._id]);
+                        } else {
+                          setFormCategories(
+                            formCategories.filter((id) => id !== cat._id)
+                          );
+                        }
+                      }}
+                    />
                     {cat.name}
-                  </option>
+                  </label>
                 ))}
-              </select>
+              </div>
             </label>
 
             <button type="submit">Save</button>
