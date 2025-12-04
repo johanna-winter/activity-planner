@@ -1,15 +1,18 @@
 import useSWR from "swr";
 import ActivityCard from "@/components/ActivityCard";
 import Filter from "./Filter";
+import { useState } from "react";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function ActivityList({ query, setQuery }) {
+export default function ActivityList() {
   const {
     data: activities,
     isLoading,
     error,
   } = useSWR("/api/activities", fetcher);
+
+  const [query, setQuery] = useState("");
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -36,7 +39,7 @@ export default function ActivityList({ query, setQuery }) {
   return (
     <>
       <h2>Activities List</h2>
-      <Filter setQuery={setQuery} />
+      <Filter onSearch={setQuery} />
       {filteredActivities.length === 0 && (
         <p>
           Sorry we couldn´t retrieve the latest activites at the moment. Please

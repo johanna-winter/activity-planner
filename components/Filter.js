@@ -1,6 +1,4 @@
-import { useState } from "react";
-
-export default function Filter({ setQuery }) {
+export default function Filter({ onSearch }) {
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -8,16 +6,16 @@ export default function Filter({ setQuery }) {
     const data = Object.fromEntries(formData);
 
     if (data.filter) {
-      setQuery(data.filter);
+      onSearch(data.filter);
     } else {
-      setQuery("");
+      onSearch("");
     }
   }
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label>Filter:</label>
-        <input name="filter"></input>
+        <label htmlFor="filter">Filter:</label>
+        <input type="text" id="filter" name="filter"></input>
         <button>Submit</button>
       </form>
     </>
