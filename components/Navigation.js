@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import {
   Nav,
   NavItem,
@@ -8,17 +9,19 @@ import {
 } from "./StyledNavigation";
 
 export default function NavigationBar() {
+  const router = useRouter();
+
   return (
     <Nav>
       <NavList>
-        <NavItem>
+        <NavItem $highlighted={router.pathname === "/"}>
           <NavLink href="/">
-            <StyledHouse />
+            <StyledHouse $highlighted={router.pathname === "/"} />
           </NavLink>
         </NavItem>
-        <NavItem>
+        <NavItem $highlighted={router.pathname === "/favourites"}>
           <NavLink href="/favourites">
-            <StyledHeart />
+            <StyledHeart $highlighted={router.pathname === "/favourites"} />
           </NavLink>
         </NavItem>
       </NavList>

@@ -1,6 +1,7 @@
 import { Heart, House } from "lucide-react";
 import Link from "next/link";
 import styled from "styled-components";
+import css from "styled-jsx/css";
 
 export const Nav = styled.nav`
   background-color: #7abfbf;
@@ -32,16 +33,17 @@ export const NavItem = styled.li`
   width: 100%;
   height: 100%;
 
+  background-color: ${(props) => (props.$highlighted ? "#6bb0b0" : "#7abfbf")};
+
   &:hover {
     background-color: #6bb0b0;
-    border-radius: 12px;
     cursor: pointer;
   }
 `;
 
 export const NavLink = styled(Link)`
   text-decoration: none;
-  color: #1e1236;
+  color: #1e1226;
 
   display: flex;
   justify-content: center;
@@ -55,8 +57,15 @@ export const StyledHouse = styled(House)`
 
   ${NavItem}:hover & {
     stroke: #0d0d0d;
-    fill: #1e1236;
+    fill: #1e1226;
   }
+
+  ${(props) =>
+    props.$highlighted &&
+    css`
+      stroke: #0d0d0d;
+      fill: #1e1226;
+    `}
 `;
 
 export const StyledHeart = styled(Heart)`
@@ -66,6 +75,13 @@ export const StyledHeart = styled(Heart)`
 
   ${NavItem}:hover & {
     stroke: #0d0d0d;
-    fill: #1e1236;
+    fill: #1e1226;
   }
+
+  ${(props) =>
+    props.$highlighted &&
+    css`
+      stroke: #0d0d0d;
+      fill: #1e1226;
+    `}
 `;
