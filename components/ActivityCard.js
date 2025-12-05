@@ -7,19 +7,17 @@ export default function ActivityCard({
   imageSource,
   categories,
   id,
-  onClick,
-  favourites,
+onToggleFavourite, 
+isFavourite
 }) {
-  const isFavourite = favourites.includes(id);
 
   return (
     <>
       <p>{title}</p>
       <FavoriteButton
-        favourites={favourites}
         isFavourite={isFavourite}
         id={id}
-        onClick={() => onClick(id)}
+        onClick={() => onToggleFavourite(id)}
       />
       <Link href={`/activities/${id}`}>
         <Image src={imageSource} alt={title} width={240} height={330} />

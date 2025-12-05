@@ -21,17 +21,13 @@ export default function FavouritesPage({ favourites, onToggleFavourite }) {
   }
 
   const favouriteActivities = activities.filter((activity) =>
-    favorites.includes(activity._id)
+    favourites.includes(activity._id)
   );
 
   return (
     <>
       <h1>Here you can find your favorite pieces</h1>
-      <ActivityList
-        activities={favouriteActivities}
-        favourites={favourites}
-        onToggleFavourite={onToggleFavourite}
-      />
+      <ActivityList activities={favouriteActivities} favourites={favourites} />
     </>
   );
 }
