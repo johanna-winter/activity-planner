@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 
 export function useFavourites() {
@@ -6,6 +7,7 @@ export function useFavourites() {
   function getIsFavourite(id) {
     return favourites?.includes(id) ?? false;
   }
+
 
   function toggleFavourite(id) {
     setFavourites((prev) => {

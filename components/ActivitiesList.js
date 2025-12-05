@@ -5,7 +5,7 @@ import { useFavourites } from "@/hooks/useFavourites";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function ActivityList() {
-  // gemeinsamer Favourites-Hook (wird auch in ActivityDetails genutzt)
+
   const { favourites, toggleFavourite, getIsFavourite } = useFavourites();
 
   const {
@@ -44,7 +44,7 @@ export default function ActivityList() {
               categories={activity.categories}
               id={activity._id}
               isFavourite = {getIsFavourite(activity._id)}        // aktueller State
-              onToggleFavourite={toggleFavourite}  // Toggle-Funktion aus dem Hook
+              toggleFavourite={toggleFavourite}  // Toggle-Funktion aus dem Hook
 
             />
           </li>
