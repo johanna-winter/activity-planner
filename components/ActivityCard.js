@@ -13,58 +13,60 @@ export default function ActivityCard({
   categories,
   onActivityUpdated,
 }) {
-  const [isEditing, setIsEditing] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
 
-  const [formTitle, setFormTitle] = useState(title);
-  const [formCategories, setFormCategories] = useState(
-    categories.map((c) => c._id)
-  );
+  // const [formTitle, setFormTitle] = useState(title);
+  // const [formCategories, setFormCategories] = useState(
+  //   categories.map((c) => c._id)
+  // );
 
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
 
-  const { data: allCategories } = useSWR("/api/categories", fetcher);
+  // const { data: allCategories } = useSWR("/api/categories", fetcher);
 
-  async function handleSave(e) {
-    e.preventDefault();
-    setError("");
+  // async function handleSave(e) {
+  //   e.preventDefault();
+  //   setError("");
 
-    const trimmedTitle = formTitle.trim();
+  //   const trimmedTitle = formTitle.trim();
 
-    if (!trimmedTitle) {
-      setError("Title is required");
-      return;
-    }
+  //   if (!trimmedTitle) {
+  //     setError("Title is required");
+  //     return;
+  //   }
 
-    if (!formCategories || formCategories.length === 0) {
-      setError("Please select at least one category");
-      return;
-    }
+  //   if (!formCategories || formCategories.length === 0) {
+  //     setError("Please select at least one category");
+  //     return;
+  //   }
 
-    const response = await fetch(`/api/activities/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: trimmedTitle,
-        categories: formCategories,
-      }),
-    });
+  //   const response = await fetch(`/api/activities/${id}`, {
+  //     method: "PUT",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       title: trimmedTitle,
+  //       categories: formCategories,
+  //     }),
+  //   });
 
-    if (!response.ok) {
-      setError("Failed to update activity");
-      return;
-    }
+  //   if (!response.ok) {
+  //     setError("Failed to update activity");
+  //     return;
+  //   }
 
-    const updated = await response.json();
-    onActivityUpdated(updated);
-    setIsEditing(false);
-  }
+  //   const updated = await response.json();
+  //   onActivityUpdated(updated);
+  //   setIsEditing(false);
+  // }
 
-  function handleCancel() {
-    setIsEditing(false);
-    setFormTitle(title);
-    setFormCategories(categories.map((c) => c._id));
-    setError("");
-  }
+  // function handleCancel() {
+  //   setIsEditing(false);
+  //   setFormTitle(title);
+  //   setFormCategories(categories.map((c) => c._id));
+  //   setError("");
+  // }
+
+  
 
   return (
     <div>
@@ -78,7 +80,7 @@ export default function ActivityCard({
         </>
       ))}
 
-      {!isEditing && (
+      {/* {!isEditing && (
         <button type="button" onClick={() => setIsEditing(true)}>
           Edit
         </button>
@@ -134,7 +136,7 @@ export default function ActivityCard({
             </button>
           </form>
         </>
-      )}
+      )} */}
     </div>
   );
 }
