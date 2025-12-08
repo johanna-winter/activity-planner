@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import useSWR from "swr";
+import countries from "world-countries";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -14,6 +15,10 @@ export default function ActivityForm() {
 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  const countryNames = countries
+    .map((country) => country.name.common)
+    .sort((a, b) => a.localeCompare(b));
 
   useEffect(() => {
     if (successMessage) {
@@ -126,12 +131,18 @@ export default function ActivityForm() {
         />
 
         <StyledLabel htmlFor="activity-country">Country:</StyledLabel>
-        <StyledInput
+        <StyledSelect
           id="activity-country"
-          type="text"
           name="country"
           placeholder="e.g. Switzerland, Germany, UK"
-        />
+        >
+          <option value="">Select a country</option>
+          {countryNames.map((country) => (
+            <option key={country} value={country}>
+              {country}
+            </option>
+          ))}
+        </StyledSelect>
         <StyledButton type="submit">Submit</StyledButton>
       </StyledForm>
     </>
@@ -150,6 +161,10 @@ const StyledLabel = styled.label`
 `;
 
 const StyledInput = styled.input`
+  padding: 0.5rem;
+`;
+
+const StyledSelect = styled.select`
   padding: 0.5rem;
 `;
 
