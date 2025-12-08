@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import NavigationBar from "./Navigation";
+import NavigationBar from "./Navigation/Navigation";
 
 export default function Layout({ children }) {
   return (

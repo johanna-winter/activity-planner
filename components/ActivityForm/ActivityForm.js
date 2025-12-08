@@ -27,6 +27,7 @@ export default function ActivityForm() {
 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   const countryOptions = countries
     .map((country) => ({ value: country.cca2, label: country.name.common }))
@@ -94,64 +95,69 @@ export default function ActivityForm() {
         <StatusMessage $success>{successMessage}</StatusMessage>
       )}
       {errorMessage && <StatusMessage>{errorMessage}</StatusMessage>}
-      <StyledForm onSubmit={handleSubmit}>
-        <StyledFormLabel htmlFor="activity-title">Title:</StyledFormLabel>
-        <StyledFormInput
-          id="activity-title"
-          type="text"
-          name="title"
-          maxLength="50"
-          placeholder="Name your activity (e.g. Kayaking)"
-          required
-        />
+      <button onClick={() => setIsFormOpen((prev) => !prev)}>
+        {isFormOpen ? "Hide form" : "Show form"}
+      </button>
+      {isFormOpen && (
+        <StyledForm onSubmit={handleSubmit}>
+          <StyledFormLabel htmlFor="activity-title">Title:</StyledFormLabel>
+          <StyledFormInput
+            id="activity-title"
+            type="text"
+            name="title"
+            maxLength="50"
+            placeholder="Name your activity (e.g. Kayaking)"
+            required
+          />
 
-        <StyledFormLabel htmlFor="activity-description">
-          Description:
-        </StyledFormLabel>
-        <StyledFormInput
-          id="activity-description"
-          type="text"
-          name="description"
-          maxLength="300"
-          placeholder="Add a short description"
-        />
+          <StyledFormLabel htmlFor="activity-description">
+            Description:
+          </StyledFormLabel>
+          <StyledFormInput
+            id="activity-description"
+            type="text"
+            name="description"
+            maxLength="300"
+            placeholder="Add a short description"
+          />
 
-        <CategoryGroup>
-          <CategoryLegend>Choose categories:</CategoryLegend>
-          <CategoryList>
-            {categories.map((category) => (
-              <CategoryItem key={category._id}>
-                <CategoryLabel>
-                  <StyledFormInput
-                    type="checkbox"
-                    id="activity-categories"
-                    name="categories"
-                    value={category._id}
-                    multiple
-                  />
-                  {category.name}
-                </CategoryLabel>
-              </CategoryItem>
-            ))}
-          </CategoryList>
-        </CategoryGroup>
+          <CategoryGroup>
+            <CategoryLegend>Choose categories:</CategoryLegend>
+            <CategoryList>
+              {categories.map((category) => (
+                <CategoryItem key={category._id}>
+                  <CategoryLabel>
+                    <StyledFormInput
+                      type="checkbox"
+                      id="activity-categories"
+                      name="categories"
+                      value={category._id}
+                      multiple
+                    />
+                    {category.name}
+                  </CategoryLabel>
+                </CategoryItem>
+              ))}
+            </CategoryList>
+          </CategoryGroup>
 
-        <StyledFormLabel htmlFor="activity-area">Area:</StyledFormLabel>
-        <StyledFormInput
-          id="activity-area"
-          type="text"
-          name="area"
-          placeholder="e.g. Alps, Black Forest, Lake District"
-        />
+          <StyledFormLabel htmlFor="activity-area">Area:</StyledFormLabel>
+          <StyledFormInput
+            id="activity-area"
+            type="text"
+            name="area"
+            placeholder="e.g. Alps, Black Forest, Lake District"
+          />
 
-        <StyledFormLabel htmlFor="activity-country">Country:</StyledFormLabel>
-        <CountryCombobox
-          id="activity-country"
-          name="country"
-          options={countryOptions}
-        />
-        <StyledFormButton type="submit">Submit</StyledFormButton>
-      </StyledForm>
+          <StyledFormLabel htmlFor="activity-country">Country:</StyledFormLabel>
+          <CountryCombobox
+            id="activity-country"
+            name="country"
+            options={countryOptions}
+          />
+          <StyledFormButton type="submit">Submit</StyledFormButton>
+        </StyledForm>
+      )}
     </>
   );
 }
