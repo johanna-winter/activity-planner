@@ -33,12 +33,19 @@ export default function ActivityDetailPage() {
   }
 
   async function handleDeleteActivity(id) {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this activity?"
+    );
+    if (!confirmed) {
+      return;
+    }
+
     const response = await fetch(`/api/activities/${id}`, {
       method: "DELETE",
     });
 
     if (response.ok) {
-      router.push("/");
+      router.push("/?deleted=true");
     } else {
       return alert("Something went wrong. Please try again.");
     }
@@ -48,5 +55,10 @@ export default function ActivityDetailPage() {
     return <h1>Activity not found</h1>;
   }
 
-  return <ActivityDetails activity={activity} onDeleteActivity={handleDeleteActivity} />;
+  return (
+    <ActivityDetails
+      activity={activity}
+      onDeleteActivity={handleDeleteActivity}
+    />
+  );
 }
