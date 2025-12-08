@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import useSWR from "swr";
 import countries from "world-countries";
+import CountryCombobox from "./CountryCombobox";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -17,8 +18,8 @@ export default function ActivityForm() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const countryNames = countries
-    .map((country) => country.name.common)
-    .sort((a, b) => a.localeCompare(b));
+    .map((country) => ({ value: country.cca2, label: country.name.common }))
+    .sort((a, b) => a.label.localeCompare(b.label));
 
   useEffect(() => {
     if (successMessage) {
@@ -131,18 +132,18 @@ export default function ActivityForm() {
         />
 
         <StyledLabel htmlFor="activity-country">Country:</StyledLabel>
-        <StyledSelect
+        <CountryCombobox
           id="activity-country"
           name="country"
-          placeholder="e.g. Switzerland, Germany, UK"
-        >
-          <option value="">Select a country</option>
-          {countryNames.map((country) => (
-            <option key={country} value={country}>
-              {country}
-            </option>
-          ))}
-        </StyledSelect>
+          options={countryNames}
+          // placeholder="e.g. Switzerland, Germany, UK"
+        />
+        {/* <option value="">Select a country</option>
+            {countryNames.map((country) => (
+              <option key={country} value={country}>
+                {country}
+              </option>
+            ))} */}
         <StyledButton type="submit">Submit</StyledButton>
       </StyledForm>
     </>
@@ -161,10 +162,6 @@ const StyledLabel = styled.label`
 `;
 
 const StyledInput = styled.input`
-  padding: 0.5rem;
-`;
-
-const StyledSelect = styled.select`
   padding: 0.5rem;
 `;
 
