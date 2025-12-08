@@ -1,4 +1,4 @@
-{ ActivityListProvider } from "@/components/ActivitiesList";
+import { ActivityListProvider } from "@/components/ActivitiesList";
 import ActivityForm from "@/components/ActivityForm";
 import styled from "styled-components";
 
