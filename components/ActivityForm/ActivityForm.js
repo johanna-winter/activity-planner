@@ -1,8 +1,19 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import useSWR from "swr";
 import countries from "world-countries";
 import CountryCombobox from "./CountryCombobox";
+import {
+  StyledForm,
+  StyledFormLabel,
+  StyledFormInput,
+  StyledFormButton,
+  StatusMessage,
+  CategoryGroup,
+  CategoryLegend,
+  CategoryList,
+  CategoryItem,
+  CategoryLabel,
+} from "./StyledActivityForm";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -17,7 +28,7 @@ export default function ActivityForm() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const countryNames = countries
+  const countryOptions = countries
     .map((country) => ({ value: country.cca2, label: country.name.common }))
     .sort((a, b) => a.label.localeCompare(b.label));
 
@@ -84,8 +95,8 @@ export default function ActivityForm() {
       )}
       {errorMessage && <StatusMessage>{errorMessage}</StatusMessage>}
       <StyledForm onSubmit={handleSubmit}>
-        <StyledLabel htmlFor="activity-title">Title:</StyledLabel>
-        <StyledInput
+        <StyledFormLabel htmlFor="activity-title">Title:</StyledFormLabel>
+        <StyledFormInput
           id="activity-title"
           type="text"
           name="title"
@@ -94,8 +105,10 @@ export default function ActivityForm() {
           required
         />
 
-        <StyledLabel htmlFor="activity-description">Description:</StyledLabel>
-        <StyledInput
+        <StyledFormLabel htmlFor="activity-description">
+          Description:
+        </StyledFormLabel>
+        <StyledFormInput
           id="activity-description"
           type="text"
           name="description"
@@ -109,7 +122,7 @@ export default function ActivityForm() {
             {categories.map((category) => (
               <CategoryItem key={category._id}>
                 <CategoryLabel>
-                  <StyledInput
+                  <StyledFormInput
                     type="checkbox"
                     id="activity-categories"
                     name="categories"
@@ -123,91 +136,22 @@ export default function ActivityForm() {
           </CategoryList>
         </CategoryGroup>
 
-        <StyledLabel htmlFor="activity-area">Area:</StyledLabel>
-        <StyledInput
+        <StyledFormLabel htmlFor="activity-area">Area:</StyledFormLabel>
+        <StyledFormInput
           id="activity-area"
           type="text"
           name="area"
           placeholder="e.g. Alps, Black Forest, Lake District"
         />
 
-        <StyledLabel htmlFor="activity-country">Country:</StyledLabel>
+        <StyledFormLabel htmlFor="activity-country">Country:</StyledFormLabel>
         <CountryCombobox
           id="activity-country"
           name="country"
-          options={countryNames}
-          // placeholder="e.g. Switzerland, Germany, UK"
+          options={countryOptions}
         />
-        {/* <option value="">Select a country</option>
-            {countryNames.map((country) => (
-              <option key={country} value={country}>
-                {country}
-              </option>
-            ))} */}
-        <StyledButton type="submit">Submit</StyledButton>
+        <StyledFormButton type="submit">Submit</StyledFormButton>
       </StyledForm>
     </>
   );
 }
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 0 1rem;
-`;
-
-const StyledLabel = styled.label`
-  font-weight: bold;
-`;
-
-const StyledInput = styled.input`
-  padding: 0.5rem;
-`;
-
-const StyledButton = styled.button`
-  padding: 0.6rem 1rem;
-  margin-top: 1rem;
-  cursor: pointer;
-`;
-
-const StatusMessage = styled.p`
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  font-weight: bold;
-  background-color: ${(props) => (props.$success ? "#e6ffe6" : "#ffe6e6")};
-  border: 1px solid ${(props) => (props.$success ? "#00a000" : "#d00000")};
-  color: ${(props) => (props.$success ? "#008000" : "#b00000")};
-`;
-
-const CategoryGroup = styled.fieldset`
-  border: none;
-  padding: 0;
-  margin: 1rem 0;
-`;
-
-const CategoryLegend = styled.legend`
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-`;
-
-const CategoryList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-`;
-
-const CategoryItem = styled.li`
-  display: flex;
-  align-items: center;
-`;
-
-const CategoryLabel = styled.label`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;

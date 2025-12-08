@@ -1,39 +1,55 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
 export default function CountryCombobox({ options, name, id }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState("");
+  const [currentCountry, setCurrentCountry] = useState("");
 
   const filteredCountries = options.filter((country) =>
     country.label.toLowerCase().includes(query.toLowerCase())
   );
 
+  const selectedCountry = options.find(
+    (option) => option.label === currentCountry
+  );
+  const inputValue = selectedCountry ? selectedCountry.label : query;
+
+  const comboboxRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (comboboxRef.current && !comboboxRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <CountryWrapper>
-      <input type="hidden" name={name} value={selected} id={id} />
+    <CountryWrapper ref={comboboxRef}>
+      <input type="hidden" name={name} value={currentCountry} id={id} />
       <StyledCountryInput
         type="text"
         placeholder="Search country..."
-        value={
-          selected
-            ? options.find((option) => option.value === selected)?.label
-            : query
-        }
+        value={inputValue}
         onChange={(event) => {
           setQuery(event.target.value);
-          setSelected("");
-          setIsOpen(true);
+          setCurrentCountry("");
+          setIsDropdownOpen(true);
         }}
-        onFocus={() => setIsOpen(true)}
-        aria-expanded={isOpen}
+        onFocus={() => setIsDropdownOpen(true)}
+        aria-expanded={isDropdownOpen}
         aria-controls={`${id}-listbox`}
         role="combobox"
         autoComplete="off"
       />
 
-      {isOpen && (
+      {isDropdownOpen && (
         <StyledCountryList id={`${id}-listbox`} role="listbox">
           {filteredCountries.length === 0 && <NoResults>No matches</NoResults>}
 
@@ -42,9 +58,9 @@ export default function CountryCombobox({ options, name, id }) {
               key={country.value}
               role="option"
               onMouseDown={() => {
-                setSelected(country.value);
+                setCurrentCountry(country.label);
                 setQuery("");
-                setIsOpen(false);
+                setIsDropdownOpen(false);
               }}
             >
               {country.label}
