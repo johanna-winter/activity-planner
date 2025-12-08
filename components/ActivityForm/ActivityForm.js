@@ -3,16 +3,19 @@ import useSWR from "swr";
 import countries from "world-countries";
 import CountryCombobox from "./CountryCombobox";
 import {
+  FormSection,
   StyledForm,
   StyledFormLabel,
   StyledFormInput,
-  StyledFormButton,
+  StyledSubmitButton,
   StatusMessage,
   CategoryGroup,
   CategoryLegend,
   CategoryList,
   CategoryItem,
   CategoryLabel,
+  ToggleButton,
+  SectionHeader,
 } from "./StyledActivityForm";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -89,15 +92,17 @@ export default function ActivityForm() {
   if (categoriesError) return <p>Failed to load categories.</p>;
 
   return (
-    <>
-      <h2>Add your activity</h2>
+    <FormSection>
+      <SectionHeader>
+        <h2>Add your activity</h2>
+        <ToggleButton onClick={() => setIsFormOpen((prev) => !prev)}>
+          {isFormOpen ? "Hide form" : "Show form"}
+        </ToggleButton>
+      </SectionHeader>
       {successMessage && (
         <StatusMessage $success>{successMessage}</StatusMessage>
       )}
       {errorMessage && <StatusMessage>{errorMessage}</StatusMessage>}
-      <button onClick={() => setIsFormOpen((prev) => !prev)}>
-        {isFormOpen ? "Hide form" : "Show form"}
-      </button>
       {isFormOpen && (
         <StyledForm onSubmit={handleSubmit}>
           <StyledFormLabel htmlFor="activity-title">Title:</StyledFormLabel>
@@ -155,9 +160,9 @@ export default function ActivityForm() {
             name="country"
             options={countryOptions}
           />
-          <StyledFormButton type="submit">Submit</StyledFormButton>
+          <StyledSubmitButton type="submit">Submit</StyledSubmitButton>
         </StyledForm>
-      )}
-    </>
+      )}{" "}
+    </FormSection>
   );
 }
