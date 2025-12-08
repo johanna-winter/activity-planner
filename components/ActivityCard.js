@@ -7,11 +7,10 @@ export default function ActivityCard({
   imageSource,
   categories,
   id,
-toggleFavourite,
-isFavourite, 
-favourites
+  toggleFavourite,
+  isFavourite,
+  favourites,
 }) {
-
   return (
     <>
       <p>{title}</p>
@@ -19,8 +18,7 @@ favourites
         isFavourite={isFavourite}
         id={id}
         onClick={() => toggleFavourite(id)}
-
-        favourites={ favourites}
+        favourites={favourites}
       />
       <Link href={`/activities/${id}`}>
         <Image src={imageSource} alt={title} width={240} height={330} />

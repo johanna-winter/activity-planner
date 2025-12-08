@@ -1,24 +1,15 @@
-
+import { useActivities } from "@/components/ActivitiesList";
+import BackButton from "@/components/BackButton";
 import FavActivityList from "@/components/FavActivitiesList";
 import { useFavourites } from "@/hooks/useFavourites";
-import useSWR from "swr";
-
-
-const fetcher = (url) =>
-  fetch(url).then((res) => {
-    if (!res.ok) throw new Error("Failed to fetch");
-    return res.json();
-  });
 
 export default function FavouritesPage() {
-  const { favourites } = useFavourites();
+  const { favourites, getIsFavourite } = useFavourites();
+  const { activities, error, isLoading } = useActivities();
 
-
-  const {
-    data: activities,
-    error,
-    isLoading,
-  } = useSWR("/api/activities", fetcher);
+  if (!favourites) {
+    return null;
+  }
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -32,18 +23,25 @@ export default function FavouritesPage() {
     return <h1>Activities not found</h1>;
   }
 
-  const favouriteActivities = activities.filter(
-    (activity) => favourites?.includes(activity._id)
+  const favouriteActivities = activities.filter((activity) =>
+    getIsFavourite(activity._id)
   );
 
-  if (!favourites || favouriteActivities.length === 0) {
+  console.log(favouriteActivities);
+
+  if (favouriteActivities.length === 0) {
     return <h1>No favourites yet</h1>;
   }
 
   return (
     <>
       <h1>Here you can find your favorite pieces</h1>
-      <FavActivityList activities={favouriteActivities} favourites={favourites} />
+      <BackButton />
+      <FavActivityList
+        activities={favouriteActivities}
+        favourites={favourites}
+      />
     </>
   );
 }
+

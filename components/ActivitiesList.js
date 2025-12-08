@@ -4,15 +4,23 @@ import { useFavourites } from "@/hooks/useFavourites";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function ActivityList() {
-
-  const { favourites, toggleFavourite, getIsFavourite } = useFavourites();
-
+export function useActivities() {
   const {
     data: activities,
-    isLoading,
     error,
+    isLoading,
   } = useSWR("/api/activities", fetcher);
+  return { activities, error, isLoading };
+}
+
+export default function ActivityList() {
+  const { favourites, toggleFavourite, getIsFavourite } = useFavourites();
+
+  const { activities, error, isLoading } = useActivities();
+
+  if (!favourites) {
+    return null;
+  }
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -43,9 +51,9 @@ export default function ActivityList() {
               imageSource={activity.imageUrl}
               categories={activity.categories}
               id={activity._id}
-              isFavourite = {getIsFavourite(activity._id)}        // aktueller State
-              toggleFavourite={toggleFavourite}  // Toggle-Funktion aus dem Hook
-
+              isFavourite={getIsFavourite(activity._id)} // aktueller State
+              toggleFavourite={toggleFavourite} // Toggle-Funktion aus dem Hook
+              favourites={favourites}
             />
           </li>
         ))}
