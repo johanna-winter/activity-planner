@@ -4,6 +4,7 @@ import countries from "world-countries";
 import CountryCombobox from "./CountryCombobox";
 import {
   FormSection,
+  FormContent,
   StyledForm,
   StyledFormLabel,
   StyledFormInput,
@@ -103,7 +104,7 @@ export default function ActivityForm() {
         <StatusMessage $success>{successMessage}</StatusMessage>
       )}
       {errorMessage && <StatusMessage>{errorMessage}</StatusMessage>}
-      {isFormOpen && (
+      <FormContent isOpen={isFormOpen}>
         <StyledForm onSubmit={handleSubmit}>
           <StyledFormLabel htmlFor="activity-title">Title:</StyledFormLabel>
           <StyledFormInput
@@ -162,7 +163,7 @@ export default function ActivityForm() {
           />
           <StyledSubmitButton type="submit">Submit</StyledSubmitButton>
         </StyledForm>
-      )}{" "}
+      </FormContent>{" "}
     </FormSection>
   );
 }

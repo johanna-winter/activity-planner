@@ -1,10 +1,22 @@
 import styled from "styled-components";
 
-export const FormSection = styled.div`
+export const FormSection = styled.section`
   background: #d8f2e6;
   padding: 1rem;
   border-radius: 8px;
   margin: 1rem 0;
+`;
+
+export const SectionHeader = styled.header`
+  background: #d8f2e6;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const FormContent = styled.div`
+  display: ${(props) => (props.isOpen ? "block" : "none")};
 `;
 
 export const StyledForm = styled.form`
@@ -92,12 +104,4 @@ export const ToggleButton = styled.button`
   &:hover {
     background: #2a1c35;
   }
-`;
-
-export const SectionHeader = styled.div`
-  background: #d8f2e6;
-  padding: 0.75rem 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
