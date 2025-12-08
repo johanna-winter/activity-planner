@@ -11,9 +11,6 @@ export function useFavourites() {
 
   function toggleFavourite(id) {
     setFavourites((prev) => {
-      // if (prev === undefined) {
-      //   return [id];
-      // }
       return prev.includes(id)
         ? prev.filter((favId) => favId !== id) // war drin → entfernen
         : [...prev, id]; // war nicht drin → hinzufügen

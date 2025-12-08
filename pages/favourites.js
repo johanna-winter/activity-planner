@@ -1,6 +1,5 @@
-import { useActivities } from "@/components/ActivitiesList";
+import ActivityList, { useActivities } from "@/components/ActivitiesList";
 import BackButton from "@/components/BackButton";
-import FavActivityList from "@/components/FavActivitiesList";
 import { useFavourites } from "@/hooks/useFavourites";
 
 export default function FavouritesPage() {
@@ -37,7 +36,7 @@ export default function FavouritesPage() {
     <>
       <h1>Here you can find your favorite pieces</h1>
       <BackButton />
-      <FavActivityList
+      <ActivityList
         activities={favouriteActivities}
         favourites={favourites}
       />

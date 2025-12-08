@@ -13,21 +13,23 @@ export function useActivities() {
   return { activities, error, isLoading };
 }
 
-export default function ActivityList() {
-  const { favourites, toggleFavourite, getIsFavourite } = useFavourites();
-
+export function ActivityListProvider() {
   const { activities, error, isLoading } = useActivities();
-
-  if (!favourites) {
-    return null;
-  }
-
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
 
   if (error) {
     return <h1>Failed to load data.</h1>;
+  }
+  return <ActivityList activities={activities} />;
+}
+
+export default function ActivityList({ activities }) {
+  const { favourites, toggleFavourite, getIsFavourite } = useFavourites();
+
+  if (!favourites) {
+    return null;
   }
 
   if (!activities) {
@@ -51,8 +53,8 @@ export default function ActivityList() {
               imageSource={activity.imageUrl}
               categories={activity.categories}
               id={activity._id}
-              isFavourite={getIsFavourite(activity._id)} // aktueller State
-              toggleFavourite={toggleFavourite} // Toggle-Funktion aus dem Hook
+              isFavourite={getIsFavourite(activity._id)}
+              toggleFavourite={toggleFavourite}
               favourites={favourites}
             />
           </li>

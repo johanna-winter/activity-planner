@@ -1,4 +1,4 @@
-import ActivityList from "@/components/ActivitiesList";
+{ ActivityListProvider } from "@/components/ActivitiesList";
 import ActivityForm from "@/components/ActivityForm";
 import styled from "styled-components";
 
@@ -7,7 +7,7 @@ export default function HomePage() {
     <StyledMain>
       <h1>Activity Planner</h1>
       <ActivityForm />
-      <ActivityList />
+      <ActivityListProvider />
     </StyledMain>
   );
 }
