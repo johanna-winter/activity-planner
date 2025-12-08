@@ -1,9 +1,8 @@
 import ActivityCard from "@/components/ActivityCard";
 import { useFavourites } from "@/hooks/useFavourites";
 
-
-export default function FavActivityList({ activities, favourites }) {
-  const { toggleFavourite } = useFavourites();
+export default function FavActivityList({ activities, favourites, isFavourite }) {
+  const { toggleFavourite, getIsFavourite } = useFavourites();
 
   return (
     <>
@@ -17,7 +16,7 @@ export default function FavActivityList({ activities, favourites }) {
               id={activity._id}
               favourites={favourites}
               toggleFavourite={toggleFavourite}
-
+              isFavourite={getIsFavourite(activity._id)}
             />
           </li>
         ))}
