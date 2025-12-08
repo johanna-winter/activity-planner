@@ -28,8 +28,16 @@ export default async function handler(request, response) {
   }
 
   if (request.method === "PUT") {
-    const { title, imageUrl, categories, description, area, country } =
-      request.body;
+    const { title, 
+            imageUrl, 
+            categories, 
+            description, 
+            area, 
+            country,
+            coordinates,
+            lat,
+            lng,
+          } = request.body;
 
     if (!title || !categories || categories.length === 0) {
       return response
@@ -38,6 +46,28 @@ export default async function handler(request, response) {
           status: "error",
           message: "Title and categories are required.",
         });
+    }
+
+    let coords = coordinates || null;
+
+    if (!coords && lat && lng) {
+      coords = {
+        lat: Number(lat),
+        lng: Number(lng),
+      };
+    }
+
+    const updateData = {
+      title,
+      imageUrl,
+      categories,
+      description,
+      area,
+      country,
+    };
+
+    if (coords) {
+      updateData.coordinates = coords;
     }
 
     try {

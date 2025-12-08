@@ -1,0 +1,35 @@
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+
+const icon = L.icon({
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
+
+export default function ActivityMap({ lat, lng }) {
+  if (lat == null || lng == null) {
+    return null;
+  }
+
+  return (
+    <div style={{ height: "250px", width: "100%", marginBottom: "1rem" }}>
+      <MapContainer
+        center={[lat, lng]}
+        zoom={13}
+        style={{ height: "100%", width: "100%" }}
+        scrollWheelZoom={false}
+      >
+        <TileLayer
+          attribution='&copy; OpenStreetMap contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={[lat, lng]} icon={icon}>
+          <Popup>Activity location</Popup>
+        </Marker>
+      </MapContainer>
+    </div>
+  );
+}

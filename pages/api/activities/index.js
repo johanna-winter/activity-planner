@@ -17,7 +17,36 @@ export default async function handler(request, response) {
   }
   if (request.method === "POST") { 
     try {
-      const activityData = request.body;
+      const {
+        title,
+        imageUrl,
+        categories,
+        description,
+        area,
+        country,
+        coordinates,
+        lat,
+        lng,
+      } = request.body;
+
+      let coords = coordinates || null;
+
+      if (!coords && lat && lng) {
+        coords = {
+          lat: Number(lat),
+          lng: Number(lng),
+        };
+      }
+
+      const activityData = {
+        title,
+        imageUrl,
+        categories,
+        description,
+        area,
+        country,
+        ...(coords && { coordinates: coords }),
+      }
 
       await Activity.create(activityData);
 

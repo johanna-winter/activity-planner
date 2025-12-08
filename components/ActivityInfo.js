@@ -3,6 +3,10 @@ import BackButton from "./BackButton";
 import styled from "styled-components";
 import { useState } from "react";
 import useSWR from "swr";
+import dynamic from "next/dynamic";
+import { useSWRConfig } from "swr";
+
+const ActivityMap = dynamic(() => import("./ActivityMap"), { ssr: false });
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -12,9 +16,14 @@ export default function ActivityInfo({ activity }) {
   const [formCategories, setFormCategories] = useState(
     activity.categories.map((c) => c._id)
   );
+  const [formArea, setFormArea] = useState(activity.area || "");
+  const [formCountry, setFormCountry] = useState(activity.country || "");
+  const [formLat, setFormLat] = useState(activity.coordinates?.lat ?? "");
+  const [formLng, setFormLng] = useState(activity.coordinates?.lng ?? "");
   const [error, setError] = useState("");
 
   const { data: allCategories } = useSWR("/api/categories", fetcher);
+  const { mutate } = useSWRConfig();
 
   if (!isEditing) {
     return (
@@ -47,9 +56,24 @@ export default function ActivityInfo({ activity }) {
 
         <StyledP>
           <h3>Location:</h3>
-          <p>📍 Area: {activity.area}</p>
-          <p>🌍 Country: {activity.country}</p>
+          <p>📍 Area: {activity.area || "—"}</p>
+          <p>🌍 Country: {activity.country || "—"}</p>
+          {activity.coordinates?.lat != null &&
+            activity.coordinates?.lng != null && (
+              <p>
+                📌 Coordinates: {activity.coordinates.lat},{" "}
+                {activity.coordinates.lng}
+              </p>
+            )}
         </StyledP>
+
+        {activity.coordinates?.lat != null &&
+          activity.coordinates?.lng != null && (
+            <ActivityMap
+              lat={activity.coordinates.lat}
+              lng={activity.coordinates.lng}
+            />
+          )}
 
         <button onClick={() => setIsEditing(true)}>Edit</button>
       </>
@@ -76,12 +100,23 @@ export default function ActivityInfo({ activity }) {
             return;
           }
 
+          let coordinates = null;
+          if (formLat && formLng) {
+            coordinates = {
+              lat: Number(formLat),
+              lng: Number(formLng),
+            };
+          }
+
           const response = await fetch(`/api/activities/${activity._id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               title: trimmedTitle,
               categories: formCategories,
+              area: formArea,
+              country: formCountry,
+              coordinates,
             }),
           });
 
@@ -94,6 +129,12 @@ export default function ActivityInfo({ activity }) {
 
           activity.title = updated.title;
           activity.categories = updated.categories;
+          activity.area = updated.area;
+          activity.country = updated.country;
+          activity.coordinates = updated.coordinates;
+
+          mutate("/api/activities");
+          mutate(`/api/activities/${activity._id}`);
 
           setIsEditing(false);
         }}
@@ -103,6 +144,42 @@ export default function ActivityInfo({ activity }) {
           <input
             value={formTitle}
             onChange={(e) => setFormTitle(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Area
+          <input
+            value={formArea}
+            onChange={(e) => setFormArea(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Country
+          <input
+            value={formCountry}
+            onChange={(e) => setFormCountry(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Latitude
+          <input
+            type="number"
+            step="any"
+            value={formLat}
+            onChange={(e) => setFormLat(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Longtitude
+          <input
+            type="number"
+            step="any"
+            value={formLng}
+            onChange={(e) => setFormLng(e.target.value)}
           />
         </label>
 
