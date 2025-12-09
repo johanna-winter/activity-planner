@@ -32,7 +32,6 @@ export default function CountryCombobox({ options }) {
 
   return (
     <CountryWrapper ref={comboboxRef}>
-      {/* <input type="hidden" name={name} value={currentCountry} id={id} /> */}
       <StyledCountryLabel htmlFor="activity-country">
         Country:
       </StyledCountryLabel>
