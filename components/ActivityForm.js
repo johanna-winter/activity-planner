@@ -48,7 +48,6 @@ export default function ActivityForm() {
     const lng = formData.get("lng");
 
     const data = Object.fromEntries(formData);
-
     delete data.lat;
     delete data.lng;
 
@@ -159,12 +158,12 @@ export default function ActivityForm() {
           placeholder="e.g. 47.3769"
         />
 
-        <StyledLabel htmlFor="activity-lat">Longitude (optional):</StyledLabel>
+        <StyledLabel htmlFor="activity-lng">Longitude (optional):</StyledLabel>
         <StyledInput
-          id="activity-lat"
+          id="activity-lng"
           type="number"
           step="any"
-          name="lat"
+          name="lng"
           placeholder="e.g. 8.5417"
         />
 

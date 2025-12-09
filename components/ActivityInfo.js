@@ -40,22 +40,23 @@ export default function ActivityInfo({ activity }) {
           height={900}
         />
 
-        <StyledP>
+        <StyledBlock>
           <h3>Description:</h3>
           <p>{activity.description}</p>
-        </StyledP>
+        </StyledBlock>
 
-        <StyledP>
+        <StyledBlock>
           <h3>Categories:</h3>
           <ul>
             {activity.categories.map((category) => (
               <li key={category._id}>{category.name}</li>
             ))}
           </ul>
-        </StyledP>
+        </StyledBlock>
 
-        <StyledP>
+        <StyledBlock>
           <h3>Location:</h3>
+
           <p>Area: {activity.area || "—"}</p>
           <p>Country: {activity.country || "—"}</p>
 
@@ -71,12 +72,13 @@ export default function ActivityInfo({ activity }) {
                 />
               </>
             )}
-        </StyledP>
+        </StyledBlock>
 
         <button onClick={() => setIsEditing(true)}>Edit</button>
       </>
     );
   }
+
   return (
     <>
       <h2>Edit Activity</h2>
@@ -172,7 +174,7 @@ export default function ActivityInfo({ activity }) {
         </label>
 
         <label>
-          Longtitude
+          Longitude
           <input
             type="number"
             step="any"
@@ -214,7 +216,7 @@ export default function ActivityInfo({ activity }) {
   );
 }
 
-const StyledP = styled.p`
+const StyledBlock = styled.div`
   margin-bottom: 2rem;
 `;
 
