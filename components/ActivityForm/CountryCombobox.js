@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
-export default function CountryCombobox({ options, name, id }) {
+export default function CountryCombobox({ options }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [currentCountry, setCurrentCountry] = useState("");
@@ -32,9 +32,15 @@ export default function CountryCombobox({ options, name, id }) {
 
   return (
     <CountryWrapper ref={comboboxRef}>
-      <input type="hidden" name={name} value={currentCountry} id={id} />
+      {/* <input type="hidden" name={name} value={currentCountry} id={id} /> */}
+      <StyledCountryLabel htmlFor="activity-country">
+        Country:
+      </StyledCountryLabel>
+
       <StyledCountryInput
         type="text"
+        id="activity-country"
+        name="country"
         placeholder="Search country..."
         value={inputValue}
         onChange={(event) => {
@@ -44,13 +50,13 @@ export default function CountryCombobox({ options, name, id }) {
         }}
         onFocus={() => setIsDropdownOpen(true)}
         aria-expanded={isDropdownOpen}
-        aria-controls={`${id}-listbox`}
+        aria-controls="activity-country-listbox"
         role="combobox"
         autoComplete="off"
       />
 
       {isDropdownOpen && (
-        <StyledCountryList id={`${id}-listbox`} role="listbox">
+        <StyledCountryList id="activity-country-listbox" role="listbox">
           {filteredCountries.length === 0 && <NoResults>No matches</NoResults>}
 
           {filteredCountries.map((country) => (
@@ -75,6 +81,10 @@ export default function CountryCombobox({ options, name, id }) {
 const CountryWrapper = styled.div`
   position: relative;
   width: 100%;
+`;
+
+const StyledCountryLabel = styled.label`
+  font-weight: bold;
 `;
 
 const StyledCountryInput = styled.input`

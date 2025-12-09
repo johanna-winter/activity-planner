@@ -155,12 +155,7 @@ export default function ActivityForm() {
             placeholder="e.g. Alps, Black Forest, Lake District"
           />
 
-          <StyledFormLabel htmlFor="activity-country">Country:</StyledFormLabel>
-          <CountryCombobox
-            id="activity-country"
-            name="country"
-            options={countryOptions}
-          />
+          <CountryCombobox options={countryOptions} />
           <StyledSubmitButton type="submit">Submit</StyledSubmitButton>
         </StyledForm>
       </FormContent>{" "}
