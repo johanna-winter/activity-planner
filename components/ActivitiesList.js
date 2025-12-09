@@ -16,8 +16,6 @@ export function useActivities() {
   return { activities, error, isLoading };
 }
 
-  const [query, setQuery] = useState("");
-
 export function ActivityListProvider() {
   const { activities, error, isLoading } = useActivities();
   if (isLoading) {
@@ -32,6 +30,25 @@ export function ActivityListProvider() {
     return;
   }
 
+  if (error) {
+    return <h1>Failed to load data.</h1>;
+  }
+
+  return <ActivityList activities={activities} />;
+}
+
+export default function ActivityList({ activities }) {
+  const { favourites, toggleFavourite, getIsFavourite } = useFavourites();
+  const [query, setQuery] = useState("");
+
+  if (!favourites) {
+    return null;
+  }
+
+  if (!activities) {
+    return null;
+  }
+
   function handleActivityUpdated(updatedActivity) {
     mutate(
       (oldActivities) =>
@@ -40,9 +57,6 @@ export function ActivityListProvider() {
         ),
       false
     );
-  }
-  if (error) {
-    return <h1>Failed to load data.</h1>;
   }
 
   const filteredActivities = activities.filter((activity) => {
@@ -54,19 +68,6 @@ export function ActivityListProvider() {
 
     return filteredTitle || filteredCategories;
   });
-  return <ActivityList activities={activities} />;
-}
-
-export default function ActivityList({ activities }) {
-  const { favourites, toggleFavourite, getIsFavourite } = useFavourites();
-
-  if (!favourites) {
-    return null;
-  }
-
-  if (!activities) {
-    return null;
-  }
 
   return (
     <>
