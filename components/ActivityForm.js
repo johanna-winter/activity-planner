@@ -16,31 +16,6 @@ export default function ActivityForm() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [imageUrl, setImageUrl] = useState("");
-  const [uploading, setUploading] = useState(false);
-
-  async function uploadImage(file) {
-    const formData = new FormData();
-    formData.append("imageUpload", file);
-
-    setUploading(true);
-
-    const response = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
-
-    setUploading(false);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error("Upload failed: " + errorText);
-    }
-
-    const data = await response.json();
-    return data.secure_url;
-  }
-
   useEffect(() => {
     if (successMessage) {
       const timer = setTimeout(() => {
@@ -65,23 +40,30 @@ export default function ActivityForm() {
     const formData = new FormData(event.target);
     const categoriesArray = formData.getAll("categories");
 
-    const file = formData.get("imageUpload");
-    let uploadedImageUrl = "";
-
-    if (file) {
-      uploadedImageUrl = await uploadImage(file);
-    }
-
-    const activityData = {
-      ...Object.fromEntries(formData),
-      categories: categoriesArray,
-      imageUrl: uploadedImageUrl,
-    };
-
     if (categoriesArray.length === 0) {
       setErrorMessage("Please select at least one category.");
       return;
     }
+
+    // image upload gets a different formdata because of the api route
+    const uploadFormData = new FormData();
+    uploadFormData.append("imageUpload", formData.get("imageUpload"));
+
+    const uploadResponse = await fetch("/api/upload", {
+      method: "POST",
+      body: uploadFormData,
+    });
+
+    const { secure_url } = await uploadResponse.json();
+
+    const activityData = {
+      title: formData.get("title"),
+      description: formData.get("description"),
+      area: formData.get("area"),
+      country: formData.get("country"),
+      categories: categoriesArray,
+      imageUrl: secure_url,
+    };
 
     const response = await fetch("/api/activities", {
       method: "POST",
@@ -94,7 +76,6 @@ export default function ActivityForm() {
       setErrorMessage("");
       mutate();
       event.target.reset();
-      setImageUrl("");
     } else {
       setErrorMessage("Something went wrong. Please try again.");
       setSuccessMessage("");
@@ -169,19 +150,7 @@ export default function ActivityForm() {
         />
 
         <label htmlFor="imageUpload">Image:</label>
-        <input type="file" name="imageUpload" />
-
-        {imageUrl && (
-          <Image
-            src={imageUrl}
-            alt="preview"
-            width={200}
-            height={150}
-            style={{ objectFit: "cover" }}
-          />
-        )}
-
-        {uploading && <p>Uploading image…</p>}
+        <input type="file" name="imageUpload" accept="image/*" />
 
         <StyledButton type="submit">Submit</StyledButton>
       </StyledForm>
