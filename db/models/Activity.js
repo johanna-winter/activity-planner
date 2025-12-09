@@ -10,6 +10,11 @@ const activitySchema = new Schema({
   description: { type: String },
   area: { type: String },
   country: { type: String },
+
+coordinates: {
+  lat: { type: Number },
+  lng: { type: Number },
+},
 });
 
 const Activity =

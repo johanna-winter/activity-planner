@@ -44,9 +44,25 @@ export default function ActivityForm() {
       return;
     }
 
+    const lat = formData.get("lat");
+    const lng = formData.get("lng");
+
+    const data = Object.fromEntries(formData);
+    delete data.lat;
+    delete data.lng;
+
+    const coordinates =
+      lat && lng
+        ? {
+            lat: Number(lat),
+            lng: Number(lng),
+          }
+        : null;
+
     const activityData = {
-      ...Object.fromEntries(formData),
+      ...data,
       categories: categoriesArray,
+      ...(coordinates && { coordinates }),
     };
 
     const response = await fetch("/api/activities", {
@@ -132,6 +148,25 @@ export default function ActivityForm() {
           name="country"
           placeholder="e.g. Switzerland, Germany, UK"
         />
+
+        <StyledLabel htmlFor="activity-lat">Latitude (optional):</StyledLabel>
+        <StyledInput
+          id="activity-lat"
+          type="number"
+          step="any"
+          name="lat"
+          placeholder="e.g. 47.3769"
+        />
+
+        <StyledLabel htmlFor="activity-lng">Longitude (optional):</StyledLabel>
+        <StyledInput
+          id="activity-lng"
+          type="number"
+          step="any"
+          name="lng"
+          placeholder="e.g. 8.5417"
+        />
+
         <StyledButton type="submit">Submit</StyledButton>
       </StyledForm>
     </>
