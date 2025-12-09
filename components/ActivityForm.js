@@ -1,4 +1,4 @@
-import { CldUploadWidget } from "next-cloudinary";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import useSWR from "swr";
@@ -17,6 +17,29 @@ export default function ActivityForm() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [imageUrl, setImageUrl] = useState("");
+  const [uploading, setUploading] = useState(false);
+
+  async function uploadImage(file) {
+    const formData = new FormData();
+    formData.append("imageUpload", file);
+
+    setUploading(true);
+
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    setUploading(false);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error("Upload failed: " + errorText);
+    }
+
+    const data = await response.json();
+    return data.secure_url;
+  }
 
   useEffect(() => {
     if (successMessage) {
@@ -42,10 +65,17 @@ export default function ActivityForm() {
     const formData = new FormData(event.target);
     const categoriesArray = formData.getAll("categories");
 
+    const file = formData.get("imageUpload");
+    let uploadedImageUrl = "";
+
+    if (file) {
+      uploadedImageUrl = await uploadImage(file);
+    }
+
     const activityData = {
       ...Object.fromEntries(formData),
       categories: categoriesArray,
-      imageUrl,
+      imageUrl: uploadedImageUrl,
     };
 
     if (categoriesArray.length === 0) {
@@ -64,6 +94,7 @@ export default function ActivityForm() {
       setErrorMessage("");
       mutate();
       event.target.reset();
+      setImageUrl("");
     } else {
       setErrorMessage("Something went wrong. Please try again.");
       setSuccessMessage("");
@@ -136,20 +167,21 @@ export default function ActivityForm() {
           name="country"
           placeholder="e.g. Switzerland, Germany, UK"
         />
-        <CldUploadWidget
-          uploadPreset="DEIN_UPLOAD_PRESET"
-          onUpload={(result) => {
-            setImageUrl(result.info.secure_url);
-          }}
-        >
-          {({ open }) => (
-            <button type="button" onClick={() => open()}>
-              Upload Image
-            </button>
-          )}
-        </CldUploadWidget>
 
-        <input type="hidden" name="imageUrl" value={imageUrl} />
+        <label htmlFor="imageUpload">Image:</label>
+        <input type="file" name="imageUpload" />
+
+        {imageUrl && (
+          <Image
+            src={imageUrl}
+            alt="preview"
+            width={200}
+            height={150}
+            style={{ objectFit: "cover" }}
+          />
+        )}
+
+        {uploading && <p>Uploading image…</p>}
 
         <StyledButton type="submit">Submit</StyledButton>
       </StyledForm>
