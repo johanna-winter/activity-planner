@@ -1,3 +1,4 @@
+import { CldUploadWidget } from "next-cloudinary";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import useSWR from "swr";
@@ -14,6 +15,8 @@ export default function ActivityForm() {
 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
     if (successMessage) {
@@ -39,15 +42,16 @@ export default function ActivityForm() {
     const formData = new FormData(event.target);
     const categoriesArray = formData.getAll("categories");
 
+    const activityData = {
+      ...Object.fromEntries(formData),
+      categories: categoriesArray,
+      imageUrl,
+    };
+
     if (categoriesArray.length === 0) {
       setErrorMessage("Please select at least one category.");
       return;
     }
-
-    const activityData = {
-      ...Object.fromEntries(formData),
-      categories: categoriesArray,
-    };
 
     const response = await fetch("/api/activities", {
       method: "POST",
@@ -132,6 +136,21 @@ export default function ActivityForm() {
           name="country"
           placeholder="e.g. Switzerland, Germany, UK"
         />
+        <CldUploadWidget
+          uploadPreset="DEIN_UPLOAD_PRESET"
+          onUpload={(result) => {
+            setImageUrl(result.info.secure_url);
+          }}
+        >
+          {({ open }) => (
+            <button type="button" onClick={() => open()}>
+              Upload Image
+            </button>
+          )}
+        </CldUploadWidget>
+
+        <input type="hidden" name="imageUrl" value={imageUrl} />
+
         <StyledButton type="submit">Submit</StyledButton>
       </StyledForm>
     </>
