@@ -10,10 +10,7 @@ export default function CountryCombobox({ options }) {
     country.label.toLowerCase().includes(query.toLowerCase())
   );
 
-  const selectedCountry = options.find(
-    (option) => option.label === currentCountry
-  );
-  const inputValue = selectedCountry ? selectedCountry.label : query;
+  const inputValue = currentCountry || query;
 
   const comboboxRef = useRef(null);
 
