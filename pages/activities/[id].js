@@ -48,5 +48,11 @@ export default function ActivityDetailPage() {
     return <h1>Activity not found</h1>;
   }
 
-  return <ActivityDetails activity={activity} onDeleteActivity={handleDeleteActivity} />;
+  return (
+    <ActivityDetails
+      activity={activity}
+      id={id}
+      onDeleteActivity={handleDeleteActivity}
+    />
+  );
 }

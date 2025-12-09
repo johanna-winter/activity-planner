@@ -2,19 +2,22 @@ import useSWR from "swr";
 import ActivityCard from "@/components/ActivityCard";
 import Filter from "./Filter";
 import { useState } from "react";
+import { useFavourites } from "@/hooks/useFavourites";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function ActivityList() {
+export function useActivities() {
   const {
     data: activities,
     isLoading,
     error,
     mutate,
   } = useSWR("/api/activities", fetcher);
+  return { activities, error, isLoading };
+}
 
-  const [query, setQuery] = useState("");
-
+export function ActivityListProvider() {
+  const { activities, error, isLoading } = useActivities();
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -27,6 +30,25 @@ export default function ActivityList() {
     return;
   }
 
+  if (error) {
+    return <h1>Failed to load data.</h1>;
+  }
+
+  return <ActivityList activities={activities} />;
+}
+
+export default function ActivityList({ activities }) {
+  const { favourites, toggleFavourite, getIsFavourite } = useFavourites();
+  const [query, setQuery] = useState("");
+
+  if (!favourites) {
+    return null;
+  }
+
+  if (!activities) {
+    return null;
+  }
+
   function handleActivityUpdated(updatedActivity) {
     mutate(
       (oldActivities) =>
@@ -35,9 +57,6 @@ export default function ActivityList() {
         ),
       false
     );
-  }
-  if (error) {
-    return <h1>Failed to load data.</h1>;
   }
 
   const filteredActivities = activities.filter((activity) => {
@@ -72,6 +91,9 @@ export default function ActivityList() {
               area={activity.area}
               country={activity.country}
               onActivityUpdated={handleActivityUpdated}
+              isFavourite={getIsFavourite(activity._id)}
+              toggleFavourite={toggleFavourite}
+              favourites={favourites}
             />
           </li>
         ))}
