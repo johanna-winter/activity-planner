@@ -10,18 +10,30 @@ const icon = L.icon({
 });
 
 export default function ActivityMap({ lat, lng }) {
-  if (lat == null || lng == null) {
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
     return null;
   }
 
   return (
-    <div style={{ height: "250px", width: "100%", marginBottom: "1rem" }}>
-      <MapContainer
-        center={[lat, lng]}
-        zoom={13}
-        style={{ height: "100%", width: "100%" }}
-        scrollWheelZoom={false}
-      >
+        <div
+          style={{
+            height: "150px",
+            width: "300px",
+            overflow: "hidden",
+            borderRadius: "8px",
+            border: "2px dashed #ccc",
+            marginTop: "10px",
+            marginBottom: "10px",
+          }}
+        >
+          <MapContainer
+            center={[lat, lng]}
+            zoom={13}
+            style={{ height: "100%", width: "100%" }}
+          >
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <Marker position={[lat, lng]} />
+
         <TileLayer
           attribution='&copy; OpenStreetMap contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -15,7 +15,6 @@ export default function ActivityCard({
   country,
   onActivityUpdated,
 }) {
-
   return (
     <div>
       <p>{title}</p>

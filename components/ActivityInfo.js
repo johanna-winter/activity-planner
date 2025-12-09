@@ -56,24 +56,22 @@ export default function ActivityInfo({ activity }) {
 
         <StyledP>
           <h3>Location:</h3>
-          <p>📍 Area: {activity.area || "—"}</p>
-          <p>🌍 Country: {activity.country || "—"}</p>
+          <p>Area: {activity.area || "—"}</p>
+          <p>Country: {activity.country || "—"}</p>
+
           {activity.coordinates?.lat != null &&
             activity.coordinates?.lng != null && (
-              <p>
-                📌 Coordinates: {activity.coordinates.lat},{" "}
-                {activity.coordinates.lng}
-              </p>
+              <>
+                <p>Latitude: {activity.coordinates.lat}</p>
+                <p>Longitude: {activity.coordinates.lng}</p>
+
+                <ActivityMap
+                  lat={activity.coordinates.lat}
+                  lng={activity.coordinates.lng}
+                />
+              </>
             )}
         </StyledP>
-
-        {activity.coordinates?.lat != null &&
-          activity.coordinates?.lng != null && (
-            <ActivityMap
-              lat={activity.coordinates.lat}
-              lng={activity.coordinates.lng}
-            />
-          )}
 
         <button onClick={() => setIsEditing(true)}>Edit</button>
       </>
