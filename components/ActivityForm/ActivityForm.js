@@ -138,7 +138,6 @@ export default function ActivityForm() {
                       id={`category-${category._id}`}
                       name="categories"
                       value={category._id}
-                      multiple
                     />
                     {category.name}
                   </CategoryLabel>
