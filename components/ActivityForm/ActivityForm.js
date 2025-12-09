@@ -132,10 +132,10 @@ export default function ActivityForm() {
             <CategoryList>
               {categories.map((category) => (
                 <CategoryItem key={category._id}>
-                  <CategoryLabel>
+                  <CategoryLabel htmlFor={`category-${category._id}`}>
                     <StyledFormInput
                       type="checkbox"
-                      id="activity-categories"
+                      id={`category-${category._id}`}
                       name="categories"
                       value={category._id}
                       multiple
