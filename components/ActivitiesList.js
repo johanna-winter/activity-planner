@@ -4,8 +4,6 @@ import Filter from "./Filter";
 import { useState } from "react";
 import { useFavourites } from "@/hooks/useFavourites";
 
-// const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
 export function useActivities() {
   const {
     data: activities,

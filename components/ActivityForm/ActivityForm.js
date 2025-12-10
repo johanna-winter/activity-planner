@@ -19,8 +19,6 @@ import {
   SectionHeader,
 } from "./StyledActivityForm";
 
-// const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
 export default function ActivityForm() {
   const {
     data: categories,

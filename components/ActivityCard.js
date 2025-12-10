@@ -6,8 +6,6 @@ import FavoriteButton from "./FavButton";
 
 import styled from "styled-components";
 
-// const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
 export default function ActivityCard({
   id,
   title,
