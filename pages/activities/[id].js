@@ -1,24 +1,18 @@
 import ActivityDetails from "@/components/ActivityDetails";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import useSWR from "swr";
-
-const fetcher = (url) =>
-  fetch(url).then((res) => {
-    if (!res.ok) {
-      throw new Error("Failed to fetch");
-    }
-    return res.json();
-  });
 
 export default function ActivityDetailPage() {
   const router = useRouter();
   const { id } = router.query;
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   const {
     data: activity,
     error,
     isLoading,
-  } = useSWR(router.isReady ? `/api/activities/${id}` : null, fetcher);
+  } = useSWR(router.isReady ? `/api/activities/${id}` : null);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -38,7 +32,7 @@ export default function ActivityDetailPage() {
     });
 
     if (response.ok) {
-      router.push("/");
+      router.push("/?deleted=true");
     } else {
       return alert("Something went wrong. Please try again.");
     }
@@ -49,10 +43,23 @@ export default function ActivityDetailPage() {
   }
 
   return (
-    <ActivityDetails
-      activity={activity}
-      id={id}
-      onDeleteActivity={handleDeleteActivity}
-    />
+    <div>
+      <ActivityDetails activity={activity} />
+
+      {!showConfirmDelete && (
+        <button onClick={() => setShowConfirmDelete(true)}>DELETE</button>
+      )}
+
+      {showConfirmDelete && (
+        <div>
+          <p>Are you sure you want to delete this activity?</p>
+
+          <button onClick={() => handleDeleteActivity(activity._id)}>
+            Yes
+          </button>
+          <button onClick={() => setShowConfirmDelete(false)}>No</button>
+        </div>
+      )}
+    </div>
   );
 }

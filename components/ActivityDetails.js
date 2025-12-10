@@ -15,7 +15,7 @@ const isFavourite = getIsFavourite(id)
         onClick={() => toggleFavourite(id)}
       />
       <ActivityInfo activity={activity} />
-      <button onClick={() => onDeleteActivity(activity._id)}>DELETE</button>
+     
     </StyledMain>
   );
 }

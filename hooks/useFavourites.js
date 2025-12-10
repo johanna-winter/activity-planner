@@ -12,8 +12,8 @@ export function useFavourites() {
   function toggleFavourite(id) {
     setFavourites((prev) => {
       return prev.includes(id)
-        ? prev.filter((favId) => favId !== id) // war drin → entfernen
-        : [...prev, id]; // war nicht drin → hinzufügen
+        ? prev.filter((favId) => favId !== id)
+        : [...prev, id];
     });
   }
 
