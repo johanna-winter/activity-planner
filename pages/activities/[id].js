@@ -46,9 +46,7 @@ export default function ActivityDetailPage() {
     <div>
       <ActivityDetails activity={activity} />
 
-      {!showConfirmDelete && (
-        <button onClick={() => setShowConfirmDelete(true)}>DELETE</button>
-      )}
+      <button onClick={() => setShowConfirmDelete(true)}>DELETE</button>
 
       {showConfirmDelete && (
         <div>
