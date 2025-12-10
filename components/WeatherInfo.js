@@ -19,6 +19,19 @@ export default function WeatherInfo({ location }) {
 
   const { current, location: dataLocation } = weatherData;
 
+  function formatDayTime(localtimeString) {
+    const date = new Date(localtimeString.replace(" ", "T"));
+    const day = new Intl.DateTimeFormat("en-GB", {
+      weekday: "long",
+    }).format(date);
+    const time = new Intl.DateTimeFormat("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+    }).format(date);
+
+    return `${day}, ${time}`;
+  }
+
   return (
     <WeatherWrapper>
       <Header>Current weather in {dataLocation.name}:</Header>
@@ -33,7 +46,7 @@ export default function WeatherInfo({ location }) {
       </Row>
 
       <Condition>{current.condition.text}</Condition>
-      <Time>{dataLocation.localtime}</Time>
+      <Time>{formatDayTime(dataLocation.localtime)}</Time>
     </WeatherWrapper>
   );
 }
