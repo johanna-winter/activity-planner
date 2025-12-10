@@ -1,6 +1,5 @@
 export default async function handler(request, response) {
   const { location } = request.query;
-  console.log("Weather API called with location:", location);
 
   if (!location) {
     return response.status(400).json({ error: "Please provide a location." });
@@ -15,7 +14,6 @@ export default async function handler(request, response) {
       )}&aqi=no`
     );
 
-    console.log("WeatherAPI status:", fetchResponse.status);
     const data = await fetchResponse.json();
 
     if (!fetchResponse.ok) {
