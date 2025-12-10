@@ -26,8 +26,6 @@ export default function FavouritesPage() {
     getIsFavourite(activity._id)
   );
 
-  console.log(favouriteActivities);
-
   if (favouriteActivities.length === 0) {
     return <h2>No favourites yet</h2>;
   }
@@ -36,11 +34,7 @@ export default function FavouritesPage() {
     <>
       <h1>Here you can find your favorite pieces</h1>
       <BackButton />
-      <ActivityList
-        activities={favouriteActivities}
-        favourites={favourites}
-      />
+      <ActivityList activities={favouriteActivities} favourites={favourites} />
     </>
   );
 }
-

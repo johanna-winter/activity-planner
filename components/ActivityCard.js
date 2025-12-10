@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import useSWR from "swr";
 import Link from "next/link";
-import FavoriteButton from "./FavButton";
+import FavoriteButton from "./FavouriteButton";
 
 import styled from "styled-components";
 

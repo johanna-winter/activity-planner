@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import ActivityInfo from "./ActivityInfo";
-import FavoriteButton from "./FavButton";
+import FavoriteButton from "./FavouriteButton";
 import { useFavourites } from "@/hooks/useFavourites";
 
 export default function ActivityDetails({ activity, onDeleteActivity, id }) {
   const { toggleFavourite, getIsFavourite } = useFavourites();
 
-const isFavourite = getIsFavourite(id)
+  const isFavourite = getIsFavourite(id);
 
   return (
     <StyledMain>
