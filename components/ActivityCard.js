@@ -14,7 +14,6 @@ export default function ActivityCard({
   onActivityUpdated,
   toggleFavourite,
   isFavourite,
-  favourites,
 }) {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -76,15 +75,12 @@ export default function ActivityCard({
         isFavourite={isFavourite}
         id={id}
         onClick={() => toggleFavourite(id)}
-        favourites={favourites}
       />
       <Link href={`/activities/${id}`}>
         <StyledImage src={imageSource} alt={title} width={1200} height={900} />
       </Link>
       {categories.map((category) => (
-        <>
-          <p key={category._id}>{category.name}</p>
-        </>
+        <p key={category._id}>{category.name}</p>
       ))}
 
       {!isEditing && (

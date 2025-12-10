@@ -91,7 +91,6 @@ export default function ActivityList({ activities, mutate }) {
               onActivityUpdated={handleActivityUpdated}
               isFavourite={getIsFavourite(activity._id)}
               toggleFavourite={toggleFavourite}
-              favourites={favourites}
             />
           </li>
         ))}
