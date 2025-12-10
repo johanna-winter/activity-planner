@@ -19,15 +19,15 @@ import {
   SectionHeader,
 } from "./StyledActivityForm";
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+// const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function ActivityForm() {
   const {
     data: categories,
     error: categoriesError,
     isLoading: categoriesLoading,
-  } = useSWR("/api/categories", fetcher);
-  const { mutate } = useSWR("/api/activities", fetcher);
+  } = useSWR("/api/categories");
+  const { mutate } = useSWR("/api/activities");
 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");

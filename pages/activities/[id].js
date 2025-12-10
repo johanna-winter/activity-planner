@@ -2,13 +2,13 @@ import ActivityDetails from "@/components/ActivityDetails";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
-const fetcher = (url) =>
-  fetch(url).then((res) => {
-    if (!res.ok) {
-      throw new Error("Failed to fetch");
-    }
-    return res.json();
-  });
+// const fetcher = (url) =>
+//   fetch(url).then((res) => {
+//     if (!res.ok) {
+//       throw new Error("Failed to fetch");
+//     }
+//     return res.json();
+//   });
 
 export default function ActivityDetailPage() {
   const router = useRouter();
@@ -18,7 +18,7 @@ export default function ActivityDetailPage() {
     data: activity,
     error,
     isLoading,
-  } = useSWR(router.isReady ? `/api/activities/${id}` : null, fetcher);
+  } = useSWR(router.isReady ? `/api/activities/${id}` : null);
 
   if (isLoading) {
     return <h1>Loading...</h1>;

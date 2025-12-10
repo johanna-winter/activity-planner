@@ -6,7 +6,7 @@ import FavoriteButton from "./FavButton";
 
 import styled from "styled-components";
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+// const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function ActivityCard({
   id,
@@ -27,7 +27,7 @@ export default function ActivityCard({
 
   const [error, setError] = useState("");
 
-  const { data: allCategories } = useSWR("/api/categories", fetcher);
+  const { data: allCategories } = useSWR("/api/categories");
 
   async function handleSave(e) {
     e.preventDefault();
