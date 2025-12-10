@@ -1,5 +1,6 @@
 import ActivityDetails from "@/components/ActivityDetails";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import useSWR from "swr";
 
 const fetcher = (url) =>
@@ -13,6 +14,7 @@ const fetcher = (url) =>
 export default function ActivityDetailPage() {
   const router = useRouter();
   const { id } = router.query;
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   const {
     data: activity,
@@ -33,13 +35,6 @@ export default function ActivityDetailPage() {
   }
 
   async function handleDeleteActivity(id) {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this activity?"
-    );
-    if (!confirmed) {
-      return;
-    }
-
     const response = await fetch(`/api/activities/${id}`, {
       method: "DELETE",
     });
@@ -56,9 +51,23 @@ export default function ActivityDetailPage() {
   }
 
   return (
-    <ActivityDetails
-      activity={activity}
-      onDeleteActivity={handleDeleteActivity}
-    />
+    <div>
+      <ActivityDetails activity={activity} />
+
+      {!showConfirmDelete && (
+        <button onClick={() => setShowConfirmDelete(true)}>DELETE</button>
+      )}
+
+      {showConfirmDelete && (
+        <div>
+          <p>Are you sure you want to delete this activity?</p>
+
+          <button onClick={() => handleDeleteActivity(activity._id)}>
+            Yes
+          </button>
+          <button onClick={() => setShowConfirmDelete(false)}>No</button>
+        </div>
+      )}
+    </div>
   );
 }

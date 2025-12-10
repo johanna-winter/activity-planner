@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import ActivityInfo from "./ActivityInfo";
 
-export default function ActivityDetails({ activity, onDeleteActivity }) {
+export default function ActivityDetails({ activity }) {
   return (
     <StyledMain>
       <ActivityInfo activity={activity} />
-      <button onClick={() => onDeleteActivity(activity._id)}>DELETE</button>
+     
     </StyledMain>
   );
 }
