@@ -3,7 +3,7 @@ export default async function handler(request, response) {
   console.log("Weather API called with location:", location);
 
   if (!location) {
-    return response.status(400).json({ error: "Location is required" });
+    return response.status(400).json({ error: "Please provide a location." });
   }
 
   const apiKey = process.env.WEATHERAPI_KEY;
@@ -15,19 +15,24 @@ export default async function handler(request, response) {
       )}&aqi=no`
     );
 
-    console.log("WeatherAPI status:", response.status);
+    console.log("WeatherAPI status:", fetchResponse.status);
+    const data = await fetchResponse.json();
 
     if (!fetchResponse.ok) {
-      return response
-        .status(500)
-        .json({ error: "Failed to fetch weather data" });
+      if (data.error?.message === "No matching location found.") {
+        return response.status(404).json({
+          error: "Weather information is not available for this location.",
+        });
+      }
+      return response.status(500).json({
+        error:
+          "Weather service is currently unavailable. Please try again later.",
+      });
     }
-    const data = await fetchResponse.json();
-    console.log("WeatherAPI data:", data);
-
     return response.status(200).json(data);
   } catch (error) {
-    console.error("Error fetching weather data:", error);
-    return response.status(500).json({ error: "Unable to fetch weather data" });
+    return response
+      .status(500)
+      .json({ error: "Unable to fetch weather data at the moment." });
   }
 }
