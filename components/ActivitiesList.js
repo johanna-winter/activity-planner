@@ -13,7 +13,7 @@ export function useActivities() {
     error,
     mutate,
   } = useSWR("/api/activities", fetcher);
-  return { activities, error, isLoading };
+  return { activities, error, isLoading, mutate };
 }
 
 export function ActivityListProvider() {
