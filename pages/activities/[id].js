@@ -1,10 +1,12 @@
 import ActivityDetails from "@/components/ActivityDetails";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import useSWR from "swr";
 
 export default function ActivityDetailPage() {
   const router = useRouter();
   const { id } = router.query;
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   const {
     data: activity,
@@ -30,7 +32,7 @@ export default function ActivityDetailPage() {
     });
 
     if (response.ok) {
-      router.push("/");
+      router.push("/?deleted=true");
     } else {
       return alert("Something went wrong. Please try again.");
     }
@@ -41,10 +43,23 @@ export default function ActivityDetailPage() {
   }
 
   return (
-    <ActivityDetails
-      activity={activity}
-      id={id}
-      onDeleteActivity={handleDeleteActivity}
-    />
+    <div>
+      <ActivityDetails activity={activity} />
+
+      {!showConfirmDelete && (
+        <button onClick={() => setShowConfirmDelete(true)}>DELETE</button>
+      )}
+
+      {showConfirmDelete && (
+        <div>
+          <p>Are you sure you want to delete this activity?</p>
+
+          <button onClick={() => handleDeleteActivity(activity._id)}>
+            Yes
+          </button>
+          <button onClick={() => setShowConfirmDelete(false)}>No</button>
+        </div>
+      )}
+    </div>
   );
 }
