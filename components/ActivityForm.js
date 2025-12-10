@@ -54,7 +54,7 @@ export default function ActivityForm() {
       body: uploadFormData,
     });
 
-    const { secure_url } = await uploadResponse.json();
+    const { secure_url, public_id } = await uploadResponse.json();
 
     const activityData = {
       title: formData.get("title"),
@@ -63,6 +63,7 @@ export default function ActivityForm() {
       country: formData.get("country"),
       categories: categoriesArray,
       imageUrl: secure_url,
+      imagePublicId: public_id,
     };
 
     const response = await fetch("/api/activities", {

@@ -1,5 +1,12 @@
 import dbConnect from "@/db/connect";
 import Activity from "@/db/models/Activity";
+import cloudinary from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
+});
 
 export default async function handler(request, response) {
   await dbConnect();
@@ -16,15 +23,32 @@ export default async function handler(request, response) {
 
       return response.status(200).json(activity);
     } catch (error) {
-  return response.status(400).json({ error: error.message });
+      return response.status(400).json({ error: error.message });
     }
   }
 
   if (request.method === "DELETE") {
-    await Activity.findByIdAndDelete(id);
+    try {
+      const activity = await Activity.findById(id);
 
-    response.status(200).json({ status: "Activity successfully deleted." });
-    return;
+      if (!activity) {
+        return response.status(404).json({ status: "Activity not found" });
+      }
+
+      if (activity.imagePublicId) {
+        await cloudinary.v2.uploader.destroy(activity.imagePublicId);
+      }
+
+      await activity.deleteOne();
+
+      return response
+        .status(200)
+        .json({ status: "Activity successfully deleted" });
+    } catch (error) {
+      return response
+        .status(500)
+        .json({ status: "error", message: error.message });
+    }
   }
 
   if (request.method === "PUT") {
@@ -32,12 +56,10 @@ export default async function handler(request, response) {
       request.body;
 
     if (!title || !categories || categories.length === 0) {
-      return response
-        .status(400)
-        .json({
-          status: "error",
-          message: "Title and categories are required.",
-        });
+      return response.status(400).json({
+        status: "error",
+        message: "Title and categories are required.",
+      });
     }
 
     try {

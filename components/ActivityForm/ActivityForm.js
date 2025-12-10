@@ -18,6 +18,7 @@ import {
   ToggleButton,
   SectionHeader,
 } from "./StyledActivityForm";
+import Image from "next/image";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -32,6 +33,8 @@ export default function ActivityForm() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const [preview, setPreview] = useState(null);
 
   const countryOptions = countries
     .map((country) => ({ value: country.cca2, label: country.name.common }))
@@ -66,9 +69,24 @@ export default function ActivityForm() {
       return;
     }
 
+    // image upload gets a different formdata because of the api route
+    const uploadFormData = new FormData();
+    uploadFormData.append("imageUpload", formData.get("imageUpload"));
+
+    const uploadResponse = await fetch("/api/upload", {
+      method: "POST",
+      body: uploadFormData,
+    });
+
+    const { secure_url } = await uploadResponse.json();
+
     const activityData = {
-      ...Object.fromEntries(formData),
+      title: formData.get("title"),
+      description: formData.get("description"),
+      area: formData.get("area"),
+      country: formData.get("country"),
       categories: categoriesArray,
+      imageUrl: secure_url,
     };
 
     const response = await fetch("/api/activities", {
@@ -82,6 +100,7 @@ export default function ActivityForm() {
       setErrorMessage("");
       mutate();
       event.target.reset();
+      setPreview(null);
     } else {
       setErrorMessage("Something went wrong. Please try again.");
       setSuccessMessage("");
@@ -115,7 +134,6 @@ export default function ActivityForm() {
             placeholder="Name your activity (e.g. Kayaking)"
             required
           />
-
           <StyledFormLabel htmlFor="activity-description">
             Description:
           </StyledFormLabel>
@@ -126,7 +144,6 @@ export default function ActivityForm() {
             maxLength="300"
             placeholder="Add a short description"
           />
-
           <CategoryGroup>
             <CategoryLegend>Choose categories:</CategoryLegend>
             <CategoryList>
@@ -145,7 +162,6 @@ export default function ActivityForm() {
               ))}
             </CategoryList>
           </CategoryGroup>
-
           <StyledFormLabel htmlFor="activity-area">Area:</StyledFormLabel>
           <StyledFormInput
             id="activity-area"
@@ -153,7 +169,25 @@ export default function ActivityForm() {
             name="area"
             placeholder="e.g. Alps, Black Forest, Lake District"
           />
-
+          <StyledFormLabel htmlFor="imageUpload">Image:</StyledFormLabel>{" "}
+          <StyledFormInput
+            type="file"
+            name="imageUpload"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) setPreview(URL.createObjectURL(file));
+            }}
+          />
+          {preview && (
+            <Image
+              src={preview}
+              width={200}
+              height={200}
+              alt="Preview"
+              style={{ objectFit: "cover", borderRadius: "8px" }}
+            />
+          )}
           <CountryCombobox options={countryOptions} />
           <StyledSubmitButton type="submit">Submit</StyledSubmitButton>
         </StyledForm>
