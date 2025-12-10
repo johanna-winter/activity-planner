@@ -4,13 +4,10 @@ import styled from "styled-components";
 export default function CountryCombobox({ options }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [currentCountry, setCurrentCountry] = useState("");
 
   const filteredCountries = options.filter((country) =>
     country.label.toLowerCase().includes(query.toLowerCase())
   );
-
-  const inputValue = currentCountry || query;
 
   const comboboxRef = useRef(null);
 
@@ -38,10 +35,9 @@ export default function CountryCombobox({ options }) {
         id="activity-country"
         name="country"
         placeholder="Search country..."
-        value={inputValue}
+        value={query}
         onChange={(event) => {
           setQuery(event.target.value);
-          setCurrentCountry("");
           setIsDropdownOpen(true);
         }}
         onFocus={() => setIsDropdownOpen(true)}
@@ -60,8 +56,7 @@ export default function CountryCombobox({ options }) {
               key={country.value}
               role="option"
               onMouseDown={() => {
-                setCurrentCountry(country.label);
-                setQuery("");
+                setQuery(country.label);
                 setIsDropdownOpen(false);
               }}
             >
