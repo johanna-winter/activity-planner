@@ -96,7 +96,6 @@ export default function ActivityList({ activities }) {
               toggleFavourite={toggleFavourite}
               favourites={favourites}
             />
-            <WeatherInfo location={location} />
           </li>
         ))}
       </ul>

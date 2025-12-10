@@ -25,12 +25,7 @@ export default async function handler(request, response) {
     const data = await fetchResponse.json();
     console.log("WeatherAPI data:", data);
 
-    return response.status(200).json({
-      temperature: data.current.temp_c,
-      condition: data.current.condition.text,
-      icon: data.current.condition.icon,
-      localtime: data.location.localtime,
-    });
+    return response.status(200).json(data);
   } catch (error) {
     console.error("Error fetching weather data:", error);
     return response.status(500).json({ error: "Unable to fetch weather data" });
