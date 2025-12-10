@@ -2,9 +2,9 @@ import { useState } from "react";
 import Image from "next/image";
 import useSWR from "swr";
 import Link from "next/link";
-import styled from "styled-components";
+import FavoriteButton from "./FavButton";
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+import styled from "styled-components";
 
 export default function ActivityCard({
   id,
@@ -12,6 +12,9 @@ export default function ActivityCard({
   imageSource,
   categories,
   onActivityUpdated,
+  toggleFavourite,
+  isFavourite,
+  favourites,
 }) {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -22,7 +25,7 @@ export default function ActivityCard({
 
   const [error, setError] = useState("");
 
-  const { data: allCategories } = useSWR("/api/categories", fetcher);
+  const { data: allCategories } = useSWR("/api/categories");
 
   async function handleSave(e) {
     e.preventDefault();
@@ -69,6 +72,12 @@ export default function ActivityCard({
   return (
     <div>
       <p>{title}</p>
+      <FavoriteButton
+        isFavourite={isFavourite}
+        id={id}
+        onClick={() => toggleFavourite(id)}
+        favourites={favourites}
+      />
       <Link href={`/activities/${id}`}>
         <StyledImage src={imageSource} alt={title} width={1200} height={900} />
       </Link>

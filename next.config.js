@@ -4,12 +4,9 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "example-apis.vercel.app",
-      },
-    ],
+    images: {
+      domains: ["res.cloudinary.com"],
+    },
   },
   reactStrictMode: true,
   webpack(config) {

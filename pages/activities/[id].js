@@ -3,14 +3,6 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";
 
-const fetcher = (url) =>
-  fetch(url).then((res) => {
-    if (!res.ok) {
-      throw new Error("Failed to fetch");
-    }
-    return res.json();
-  });
-
 export default function ActivityDetailPage() {
   const router = useRouter();
   const { id } = router.query;
@@ -20,7 +12,7 @@ export default function ActivityDetailPage() {
     data: activity,
     error,
     isLoading,
-  } = useSWR(router.isReady ? `/api/activities/${id}` : null, fetcher);
+  } = useSWR(router.isReady ? `/api/activities/${id}` : null);
 
   if (isLoading) {
     return <h1>Loading...</h1>;

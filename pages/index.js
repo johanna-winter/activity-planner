@@ -1,8 +1,5 @@
-import ActivityList from "@/components/ActivitiesList";
-import ActivityForm from "@/components/ActivityForm";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { ActivityListProvider } from "@/components/ActivitiesList";
+import ActivityForm from "@/components/ActivityForm/ActivityForm";
 
 export default function HomePage() {
   const router = useRouter();
@@ -23,7 +20,7 @@ export default function HomePage() {
         <StatusMessage $success>Activity has been deleted.</StatusMessage>
       )}
       <ActivityForm />
-      <ActivityList />
+      <ActivityListProvider />
     </>
   );
 }
