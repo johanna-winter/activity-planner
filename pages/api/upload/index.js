@@ -26,12 +26,20 @@ export default async function handler(request, response) {
   const file = files.imageUpload[0];
   const { newFilename, filepath } = file;
 
-  const result = await cloudinary.v2.uploader.upload(filepath, {
+  const {
+    height,
+    width,
+    secure_url: url,
+    public_id,
+  } = await cloudinary.v2.uploader.upload(filepath, {
     public_id: newFilename,
-    folder: "nf",
+    folder: "activities",
   });
 
-  response.status(200).json({
-    secure_url: result.secure_url || result.url,
+  response.status(201).json({
+    height,
+    width,
+    url,
+    public_id,
   });
 }
