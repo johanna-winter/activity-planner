@@ -1,4 +1,5 @@
 import Image from "next/image";
+import styled from "styled-components";
 import useSWR from "swr";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -16,22 +17,59 @@ export default function WeatherInfo({ location }) {
 
   if (error) return <p>Weather data unavailable. Please try again later.</p>;
 
+  const { current, location: dataLocation } = weatherData;
+
   return (
-    <>
-      <h3>Current weather in {weatherData.location.name}</h3>
-      <ul>
-        <li>Local Time: {weatherData.location.localtime}</li>
-        <li>Temperature: {weatherData.current.temp_c} °C</li>
-        <li>
-          {weatherData.current.condition.text}{" "}
-          <Image
-            src={`https:${weatherData.current.condition.icon}`}
-            alt={weatherData.current.condition.text}
-            width={25}
-            height={25}
-          />
-        </li>
-      </ul>
-    </>
+    <WeatherWrapper>
+      <Header>Current weather in {dataLocation.name}:</Header>
+      <Row>
+        <Image
+          src={`https:${current.condition.icon}`}
+          alt={current.condition.text}
+          width={50}
+          height={50}
+        />
+        <Temp>{current.temp_c} °C</Temp>
+      </Row>
+
+      <Condition>{current.condition.text}</Condition>
+      <Time>{dataLocation.localtime}</Time>
+    </WeatherWrapper>
   );
 }
+
+const WeatherWrapper = styled.section`
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 1rem;
+  max-width: 250px;
+  margin-bottom: 1rem;
+`;
+
+const Header = styled.h3`
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+`;
+
+const Row = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+`;
+
+const Temp = styled.span`
+  font-size: 1.25rem;
+  font-weight: bold;
+`;
+
+const Condition = styled.p`
+  margin: 0.25rem 0 0;
+  font-weight: 500;
+`;
+
+const Time = styled.p`
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.7;
+`;
