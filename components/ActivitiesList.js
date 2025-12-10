@@ -3,6 +3,7 @@ import ActivityCard from "@/components/ActivityCard";
 import Filter from "./Filter";
 import { useState } from "react";
 import { useFavourites } from "@/hooks/useFavourites";
+import WeatherInfo from "./WeatherInfo";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -95,6 +96,7 @@ export default function ActivityList({ activities }) {
               toggleFavourite={toggleFavourite}
               favourites={favourites}
             />
+            <WeatherInfo location={location} />
           </li>
         ))}
       </ul>
