@@ -11,15 +11,15 @@ export default function FavouritesPage() {
   }
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <h2>Loading...</h2>;
   }
 
   if (error) {
-    return <h1>{error.message}</h1>;
+    return <h2>{error.message}</h2>;
   }
 
   if (!activities) {
-    return <h1>Activities not found</h1>;
+    return <h2>Activities not found</h2>;
   }
 
   const favouriteActivities = activities.filter((activity) =>
@@ -29,7 +29,7 @@ export default function FavouritesPage() {
   console.log(favouriteActivities);
 
   if (favouriteActivities.length === 0) {
-    return <h1>No favourites yet</h1>;
+    return <h2>No favourites yet</h2>;
   }
 
   return (
