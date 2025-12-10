@@ -38,10 +38,6 @@ export default function ActivityDetailPage() {
     }
   }
 
-  if (!activity) {
-    return <h1>Activity not found</h1>;
-  }
-
   return (
     <div>
       <ActivityDetails activity={activity} />
