@@ -35,6 +35,11 @@ export default function HomePage() {
 
   return (
     <>
+      {deleteSucess && (
+        <StatusMessage $success>
+          Activity was successfully deleted!
+        </StatusMessage>
+      )}
       <ActivityForm onSubmit={handleCreateActivity} />
       <ActivityListProvider />
     </>

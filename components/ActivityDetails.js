@@ -22,7 +22,6 @@ export default function ActivityDetails({ activity, id }) {
       />
       <ActivityInfo activity={activity} />
       <WeatherInfo location={location} />
-      <button onClick={() => onDeleteActivity(activity._id)}>DELETE</button>
     </StyledMain>
   );
 }
