@@ -4,17 +4,16 @@ import Filter from "./Filter";
 import { useState } from "react";
 import { useFavourites } from "@/hooks/useFavourites";
 
-export function useActivities() {
-  const {
-    data: activities,
-    isLoading,
-    error,
-    mutate,
-  } = useSWR("/api/activities");
-  return { activities, error, isLoading, mutate };
-}
-
 export function ActivityListProvider() {
+  function useActivities() {
+    const {
+      data: activities,
+      isLoading,
+      error,
+      mutate,
+    } = useSWR("/api/activities");
+    return { activities, error, isLoading, mutate };
+  }
   const { activities, error, isLoading, mutate } = useActivities();
   if (isLoading) {
     return <p>Loading...</p>;
