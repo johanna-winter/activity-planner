@@ -3,6 +3,7 @@ import ActivityCard from "@/components/ActivityCard";
 import Filter from "./Filter";
 import { useState } from "react";
 import { useFavourites } from "@/hooks/useFavourites";
+import WeatherInfo from "./WeatherInfo";
 
 export function ActivityListProvider() {
   function useActivities() {
