@@ -17,6 +17,10 @@ export default function WeatherInfo({ location }) {
 
   if (error) return <p>Weather data unavailable. Please try again later.</p>;
 
+  if (!weatherData || !weatherData.location || !weatherData.current) {
+    return <p>Weather data unavailable.</p>;
+  }
+
   const { current, location: dataLocation } = weatherData;
 
   function formatDayTime(localtimeString) {
