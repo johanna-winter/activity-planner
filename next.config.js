@@ -4,9 +4,7 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    images: {
-      domains: ["res.cloudinary.com"],
-    },
+    domains: ["res.cloudinary.com"],
   },
   reactStrictMode: true,
   webpack(config) {
