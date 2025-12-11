@@ -3,7 +3,7 @@ import ActivityInfo from "./ActivityInfo";
 import FavoriteButton from "./FavouriteButton";
 import { useFavourites } from "@/hooks/useFavourites";
 
-export default function ActivityDetails({ activity, onDeleteActivity, id }) {
+export default function ActivityDetails({ activity, id }) {
   const { toggleFavourite, getIsFavourite } = useFavourites();
 
   const isFavourite = getIsFavourite(id);
@@ -15,7 +15,6 @@ export default function ActivityDetails({ activity, onDeleteActivity, id }) {
         onClick={() => toggleFavourite(id)}
       />
       <ActivityInfo activity={activity} />
-     
     </StyledMain>
   );
 }

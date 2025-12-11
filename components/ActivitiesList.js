@@ -19,17 +19,11 @@ export function ActivityListProvider() {
   if (isLoading) {
     return <p>Loading...</p>;
   }
-
   if (error) {
     return <p>Failed to load data.</p>;
   }
-
   if (!activities) {
-    return;
-  }
-
-  if (error) {
-    return <h1>Failed to load data.</h1>;
+    return null;
   }
 
   return <ActivityList activities={activities} mutate={mutate} />;
@@ -40,10 +34,6 @@ export default function ActivityList({ activities, mutate }) {
   const [query, setQuery] = useState("");
 
   if (!favourites) {
-    return null;
-  }
-
-  if (!activities) {
     return null;
   }
 
