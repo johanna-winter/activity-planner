@@ -92,6 +92,7 @@ export default function ActivityForm({ initialData, onSubmit, onCancel }) {
       categories: categoriesArray,
       imageUrl,
       imagePublicId,
+      oldImagePublicId: initialData?.imagePublicId,
     };
 
     const ok = await onSubmit(activityData);
