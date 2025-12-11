@@ -52,8 +52,15 @@ export default async function handler(request, response) {
   }
 
   if (request.method === "PUT") {
-    const { title, imageUrl, categories, description, area, country } =
-      request.body;
+    const {
+      title,
+      imageUrl,
+      imagePublicId,
+      categories,
+      description,
+      area,
+      country,
+    } = request.body;
 
     if (!title || !categories || categories.length === 0) {
       return response.status(400).json({
@@ -63,30 +70,46 @@ export default async function handler(request, response) {
     }
 
     try {
-      const updatedActivity = await Activity.findByIdAndUpdate(
-        id,
-        {
-          title,
-          imageUrl,
-          categories,
-          description,
-          area,
-          country,
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      ).populate("categories");
-
-      if (!updatedActivity) {
+      const activity = await Activity.findById(id);
+      if (!activity) {
         return response
           .status(404)
           .json({ status: "error", message: "Activity not found." });
       }
 
-      return response.status(200).json(updatedActivity);
+      //had to add this because deleting an updated activity kept keeping the new picture in cloudinary and deleting the old one
+      //therefore also the error
+      if (imagePublicId && imagePublicId !== activity.imagePublicId) {
+        if (activity.imagePublicId) {
+          try {
+            await cloudinary.v2.uploader.destroy(activity.imagePublicId, {
+              resource_type: "image",
+              invalidate: true,
+            });
+          } catch (error) {
+            console.error(
+              "Previous cloudinary image could not be deleted",
+              error
+            );
+          }
+        }
+        activity.imageUrl = imageUrl;
+        activity.imagePublicId = imagePublicId;
+      } else {
+        activity.imageUrl = imageUrl ?? activity.imageUrl;
+      }
+
+      activity.title = title;
+      activity.categories = categories;
+      activity.description = description;
+      activity.area = area;
+      activity.country = country;
+
+      await activity.save();
+      const populated = await activity.populate("categories");
+      return response.status(200).json(populated);
     } catch (error) {
+      console.error("PUT /api/activities/[id] error:", error);
       return response.status(500).json({
         status: "error",
         message: "Database update failed.",
