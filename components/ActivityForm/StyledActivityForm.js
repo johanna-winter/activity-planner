@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import { css } from "styled-components";
 
 export const FormSection = styled.section`
   padding: 1rem;
   margin: 1rem 0;
+  border-radius: 8px;
 `;
 
 export const SectionHeader = styled.header`
-  background: var(--background-100);
   padding: 0.75rem 1rem;
   display: flex;
   justify-content: center;

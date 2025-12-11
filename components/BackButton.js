@@ -2,7 +2,7 @@ import Link from "next/link";
 import styled from "styled-components";
 
 export default function BackButton() {
-  return <StyledLink href="/">🔙</StyledLink>;
+  return <StyledLink href="/">Back</StyledLink>;
 }
 
 const StyledLink = styled(Link)`

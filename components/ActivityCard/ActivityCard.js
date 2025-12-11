@@ -1,9 +1,12 @@
-import Image from "next/image";
-
 import Link from "next/link";
-import FavoriteButton from "./FavouriteButton";
-
-import styled from "styled-components";
+import FavoriteButton from "@/components/FavouriteButton";
+import {
+  StyledImage,
+  Card,
+  Title,
+  CategoryList,
+  CategoryTag,
+} from "./StyledActivityCard";
 
 export default function ActivityCard({
   id,
@@ -14,8 +17,8 @@ export default function ActivityCard({
   isFavourite,
 }) {
   return (
-    <div>
-      <p>{title}</p>
+    <Card>
+      <Title>{title}</Title>
       <FavoriteButton
         isFavourite={isFavourite}
         id={id}
@@ -24,17 +27,11 @@ export default function ActivityCard({
       <Link href={`/activities/${id}`}>
         <StyledImage src={imageSource} alt={title} width={1200} height={900} />
       </Link>
-      {categories.map((category) => (
-        <p key={category._id}>{category.name}</p>
-      ))}
-    </div>
+      <CategoryList>
+        {categories.map((category) => (
+          <CategoryTag key={category._id}>{category.name}</CategoryTag>
+        ))}
+      </CategoryList>
+    </Card>
   );
 }
-
-const StyledImage = styled(Image)`
-  width: 100% !important;
-  height: auto !important;
-  object-fit: cover;
-  border-radius: 8px;
-  max-width: 500px;
-`;

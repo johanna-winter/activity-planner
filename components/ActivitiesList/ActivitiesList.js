@@ -1,8 +1,15 @@
 import useSWR from "swr";
-import ActivityCard from "@/components/ActivityCard";
-import Filter from "./Filter";
+import ActivityCard from "@/components/ActivityCard/ActivityCard";
+import Filter from "@/components/Filter/Filter";
 import { useState } from "react";
 import { useFavourites } from "@/hooks/useFavourites";
+import {
+  ListHeading,
+  Divider,
+  FilterWrapper,
+  ActivityGrid,
+  ErrorHandling,
+} from "./StyledActivitiesList";
 
 export function useActivities() {
   const {
@@ -53,15 +60,18 @@ export default function ActivityList({ activities }) {
 
   return (
     <>
-      <h2>Activities List</h2>
-      <Filter onSearch={setQuery} />
+      <Divider />
+      <ListHeading>Activities List</ListHeading>
+      <FilterWrapper>
+        <Filter onSearch={setQuery} />
+      </FilterWrapper>
       {filteredActivities.length === 0 && (
-        <p>
+        <ErrorHandling>
           Sorry we couldn´t retrieve the latest activities at the moment. Please
           try again later.
-        </p>
+        </ErrorHandling>
       )}
-      <ul>
+      <ActivityGrid>
         {filteredActivities.map((activity) => (
           <li key={activity._id}>
             <ActivityCard
@@ -77,7 +87,7 @@ export default function ActivityList({ activities }) {
             />
           </li>
         ))}
-      </ul>
+      </ActivityGrid>
     </>
   );
 }
