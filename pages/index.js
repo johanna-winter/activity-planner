@@ -3,9 +3,11 @@ import ActivityForm from "@/components/ActivityForm/ActivityForm";
 import { StatusMessage } from "@/components/ActivityForm/StyledActivityForm";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import useSWR from "swr";
 
 export default function HomePage() {
   const router = useRouter();
+  const { mutate } = useSWR("/api/activities");
   const [deleteSucess, setDeleteSuccess] = useState(false);
 
   useEffect(() => {
@@ -17,12 +19,23 @@ export default function HomePage() {
     }
   }, [router]);
 
+  async function handleCreateActivity(activityData) {
+    const response = await fetch("/api/activities", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(activityData),
+    });
+
+    if (response.ok) {
+      mutate();
+      return true;
+    }
+    return false;
+  }
+
   return (
     <>
-      {deleteSucess && (
-        <StatusMessage $success>Activity has been deleted.</StatusMessage>
-      )}
-      <ActivityForm />
+      <ActivityForm onSubmit={handleCreateActivity} />
       <ActivityListProvider />
     </>
   );

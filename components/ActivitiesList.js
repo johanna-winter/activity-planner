@@ -47,16 +47,6 @@ export default function ActivityList({ activities, mutate }) {
     return null;
   }
 
-  function handleActivityUpdated(updatedActivity) {
-    mutate(
-      (oldActivities) =>
-        oldActivities.map((activity) =>
-          activity._id === updatedActivity._id ? updatedActivity : activity
-        ),
-      false
-    );
-  }
-
   const filteredActivities = activities.filter((activity) => {
     const lowerCaseQuery = query.toLowerCase();
     const filteredTitle = activity.title.toLowerCase().includes(lowerCaseQuery);
@@ -88,7 +78,6 @@ export default function ActivityList({ activities, mutate }) {
               description={activity.description}
               area={activity.area}
               country={activity.country}
-              onActivityUpdated={handleActivityUpdated}
               isFavourite={getIsFavourite(activity._id)}
               toggleFavourite={toggleFavourite}
               favourites={favourites}
