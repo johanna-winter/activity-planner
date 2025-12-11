@@ -52,10 +52,14 @@ export default function ActivityDetailPage() {
 
   return (
     <div>
-      {!isEditing && <ActivityDetails activity={activity} />}
+      {!isEditing && (
+        <>
+          <ActivityDetails activity={activity} />
 
-      <button onClick={() => setIsEditing(true)}>Edit</button>
-      <button onClick={() => setShowConfirmDelete(true)}>Delete</button>
+          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <button onClick={() => setShowConfirmDelete(true)}>Delete</button>
+        </>
+      )}
 
       {isEditing && (
         <ActivityForm
