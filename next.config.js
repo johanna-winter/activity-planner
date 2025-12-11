@@ -5,6 +5,16 @@ const nextConfig = {
   },
   images: {
     domains: ["res.cloudinary.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "example-apis.vercel.app",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.weatherapi.com",
+      },
+    ],
   },
   reactStrictMode: true,
   webpack(config) {
