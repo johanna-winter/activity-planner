@@ -53,7 +53,7 @@ export default function ActivityDetailPage() {
     <div>
       {!isEditing && (
         <>
-          <ActivityDetails activity={activity} />
+          <ActivityDetails id={id} activity={activity} />
 
           <button onClick={() => setIsEditing(true)}>Edit</button>
           <button onClick={() => setShowConfirmDelete(true)}>Delete</button>
@@ -71,7 +71,9 @@ export default function ActivityDetailPage() {
       {showConfirmDelete && (
         <div>
           <p>Are you sure you want to delete this activity?</p>
-          <button onClick={() => handleDeleteActivity(activity._id)}>Yes</button>
+          <button onClick={() => handleDeleteActivity(activity._id)}>
+            Yes
+          </button>
           <button onClick={() => setShowConfirmDelete(false)}>No</button>
         </div>
       )}
