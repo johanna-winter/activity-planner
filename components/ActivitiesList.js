@@ -3,7 +3,6 @@ import ActivityCard from "@/components/ActivityCard";
 import Filter from "./Filter";
 import { useState } from "react";
 import { useFavourites } from "@/hooks/useFavourites";
-import WeatherInfo from "./WeatherInfo";
 
 export function useActivities() {
   const {
@@ -30,7 +29,7 @@ export function ActivityListProvider() {
   return <ActivityList activities={activities} mutate={mutate} />;
 }
 
-export default function ActivityList({ activities, mutate }) {
+export default function ActivityList({ activities }) {
   const { favourites, toggleFavourite, getIsFavourite } = useFavourites();
   const [query, setQuery] = useState("");
 

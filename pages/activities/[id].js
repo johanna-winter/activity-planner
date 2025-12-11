@@ -1,6 +1,5 @@
 import ActivityDetails from "@/components/ActivityDetails";
 import ActivityForm from "@/components/ActivityForm/ActivityForm";
-import { FormContent } from "@/components/ActivityForm/StyledActivityForm";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";

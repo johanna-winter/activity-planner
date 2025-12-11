@@ -1,6 +1,5 @@
-import { useState } from "react";
 import Image from "next/image";
-import useSWR from "swr";
+
 import Link from "next/link";
 import FavoriteButton from "./FavouriteButton";
 
@@ -11,7 +10,6 @@ export default function ActivityCard({
   title,
   imageSource,
   categories,
-  onActivityUpdated,
   toggleFavourite,
   isFavourite,
 }) {
