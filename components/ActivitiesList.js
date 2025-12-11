@@ -65,13 +65,7 @@ export default function ActivityList({ activities }) {
         {filteredActivities.map((activity) => (
           <li key={activity._id}>
             <ActivityCard
-              id={activity._id}
-              title={activity.title}
-              imageSource={activity.imageUrl}
-              categories={activity.categories}
-              description={activity.description}
-              area={activity.area}
-              country={activity.country}
+              activity={activity}
               isFavourite={getIsFavourite(activity._id)}
               toggleFavourite={toggleFavourite}
             />
