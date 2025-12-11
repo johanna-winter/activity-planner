@@ -1,4 +1,5 @@
-import ActivityList, { useActivities } from "@/components/ActivitiesList";
+import ActivityList from "@/components/ActivitiesList";
+import { useActivities } from "@/components/ActivitiesList";
 import BackButton from "@/components/BackButton";
 import { useFavourites } from "@/hooks/useFavourites";
 
