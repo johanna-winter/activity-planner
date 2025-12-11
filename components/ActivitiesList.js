@@ -38,14 +38,8 @@ export default function ActivityList({ activities, mutate }) {
     return null;
   }
 
-  function handleActivityUpdated(updatedActivity) {
-    mutate(
-      (oldActivities) =>
-        oldActivities.map((activity) =>
-          activity._id === updatedActivity._id ? updatedActivity : activity
-        ),
-      false
-    );
+  if (!activities) {
+    return null;
   }
 
   const filteredActivities = activities.filter((activity) => {
@@ -79,7 +73,6 @@ export default function ActivityList({ activities, mutate }) {
               description={activity.description}
               area={activity.area}
               country={activity.country}
-              onActivityUpdated={handleActivityUpdated}
               isFavourite={getIsFavourite(activity._id)}
               toggleFavourite={toggleFavourite}
             />
