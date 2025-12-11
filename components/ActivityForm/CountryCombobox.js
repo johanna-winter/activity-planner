@@ -90,7 +90,7 @@ const StyledCountryList = styled.ul`
   max-height: 200px;
   overflow-y: auto;
   background: white;
-  border: 1px solid #ccc;
+  border: 1px solid var(--grey-300);
   border-radius: 6px;
   padding: 0;
   margin: 4px 0 0;
@@ -102,11 +102,11 @@ const StyledCountryItem = styled.li`
   cursor: pointer;
 
   &:hover {
-    background: #f2f2f2;
+    background: var(--grey-100);
   }
 `;
 
 const NoResults = styled.li`
   padding: 0.5rem;
-  color: #888;
+  color: var(--grey-700);
 `;

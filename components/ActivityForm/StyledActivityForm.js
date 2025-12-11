@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
 export const FormSection = styled.section`
-  background: #d8f2e6;
+  background: var(--background-100);
   padding: 1rem;
   border-radius: 8px;
   margin: 1rem 0;
 `;
 
 export const SectionHeader = styled.header`
-  background: #d8f2e6;
+  background: var(--background-100);
   padding: 0.75rem 1rem;
   display: flex;
   justify-content: center;
@@ -39,14 +39,14 @@ export const StyledSubmitButton = styled.button`
   margin-top: 1rem;
   cursor: pointer;
   align-self: flex-start;
-  background: #1e1226;
-  border: 1px solid #1e1226;
+  background: var(--accent-500);
+  border: 1px solid var(--accent-500);
   border-radius: 6px;
   font-weight: bold;
-  color: #fff;
+  color: var(--background-200);
 
   &:hover {
-    background: #2a1c35;
+    background: var(--accent-600);
   }
 `;
 
@@ -54,9 +54,12 @@ export const StatusMessage = styled.p`
   padding: 0.75rem 1rem;
   border-radius: 6px;
   font-weight: bold;
-  background-color: ${(props) => (props.$success ? "#e6ffe6" : "#ffe6e6")};
-  border: 1px solid ${(props) => (props.$success ? "#00a000" : "#d00000")};
-  color: ${(props) => (props.$success ? "#008000" : "#b00000")};
+  background-color: ${(props) =>
+    props.$success ? "var(--success-100)" : "var(--error-100)"};
+  border: 1px solid
+    ${(props) => (props.$success ? "var(--success-500)" : "var(--error-500)")};
+  color: ${(props) =>
+    props.$success ? "var(--success-500)" : "var(--error-500)"};
 `;
 
 export const CategoryGroup = styled.fieldset`
@@ -95,13 +98,13 @@ export const ToggleButton = styled.button`
   margin: 1rem;
   padding: 0.5rem 1.75rem;
   cursor: pointer;
-  background: #1e1226;
-  border: 1px solid #1e1226;
+  background: var(--accent-500);
+  border: 1px solid var(--accent-500);
   border-radius: 6px;
   font-weight: bold;
-  color: #fff;
+  color: var(--background-200);
 
   &:hover {
-    background: #2a1c35;
+    background: var(--accent-600);
   }
 `;
