@@ -72,6 +72,9 @@ export default function CountryCombobox({ options }) {
 const CountryWrapper = styled.div`
   position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 `;
 
 const StyledCountryLabel = styled.label`
@@ -81,6 +84,8 @@ const StyledCountryLabel = styled.label`
 const StyledCountryInput = styled.input`
   width: 100%;
   padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--primary-500);
 `;
 
 const StyledCountryList = styled.ul`

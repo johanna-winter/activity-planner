@@ -8,10 +8,11 @@ import {
   StyledForm,
   StyledFormLabel,
   StyledFormInput,
+  StyledFileInput,
   StyledSubmitButton,
   StatusMessage,
   CategoryGroup,
-  CategoryLegend,
+  CategoryTitle,
   CategoryList,
   CategoryItem,
   CategoryLabel,
@@ -142,6 +143,7 @@ export default function ActivityForm({ initialData, onSubmit, onCancel }) {
             type="text"
             name="title"
             defaultValue={initialData?.title}
+            placeholder="Name your activity (e.g. Kayaking)"
             required
           />
 
@@ -153,10 +155,11 @@ export default function ActivityForm({ initialData, onSubmit, onCancel }) {
             type="text"
             name="description"
             defaultValue={initialData?.description}
+            placeholder="Add a short description"
           />
 
           <CategoryGroup>
-            <CategoryLegend>Choose categories:</CategoryLegend>
+            <CategoryTitle>Choose categories:</CategoryTitle>
             <CategoryList>
               {categories.map((category) => {
                 const isChecked =
@@ -188,10 +191,15 @@ export default function ActivityForm({ initialData, onSubmit, onCancel }) {
             type="text"
             name="area"
             defaultValue={initialData?.area}
+            placeholder="e.g. Alps, Black Forest, Lake District"
+          />
+          <CountryCombobox
+            options={countryOptions}
+            defaultValue={initialData?.country}
           />
 
           <StyledFormLabel htmlFor="imageUpload">Image:</StyledFormLabel>
-          <StyledFormInput
+          <StyledFileInput
             type="file"
             name="imageUpload"
             accept="image/*"
@@ -220,11 +228,6 @@ export default function ActivityForm({ initialData, onSubmit, onCancel }) {
               style={{ objectFit: "cover", borderRadius: "8px" }}
             />
           )}
-
-          <CountryCombobox
-            options={countryOptions}
-            defaultValue={initialData?.country}
-          />
 
           <StyledSubmitButton type="submit">
             {isEditMode ? "Save changes" : "Create Activity"}

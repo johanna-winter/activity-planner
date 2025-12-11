@@ -1,12 +1,22 @@
 import styled from "styled-components";
 import NavigationBar from "./Navigation/Navigation";
+import Image from "next/image";
 
 export default function Layout({ children }) {
   return (
     <>
       <StyledMain>
         <Header>
-          <Title>Activity Planner</Title>
+          <HeaderContent>
+            <Image
+              src="/img/activity-icon.png"
+              alt="Activity Planner Logo"
+              width={44}
+              height={44}
+              priority
+            />
+            <Title>Activity Planner</Title>
+          </HeaderContent>
         </Header>
         {children}
       </StyledMain>
@@ -16,8 +26,7 @@ export default function Layout({ children }) {
 }
 
 const StyledMain = styled.main`
-  padding: 1rem;
-  padding-bottom: 80px;
+  padding: 80px 1rem 80px 1rem;
 `;
 
 const Header = styled.header`
@@ -34,11 +43,19 @@ const Header = styled.header`
   justify-content: center;
   align-items: center;
 
-  z-index: 900; /* just under the nav (1000) */
+  z-index: 900;
   border-bottom: 1px solid var(--primary-600);
+`;
+
+const HeaderContent = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 const Title = styled.h1`
   margin: 0;
   font-size: 2.5rem;
+  color: var(--accent-500);
+  text-shadow: -1px -1px 0 var(--accent-100);
 `;

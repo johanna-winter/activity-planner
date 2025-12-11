@@ -10,6 +10,7 @@ export default createGlobalStyle`
 
   --accent-500: #1e1226;
   --accent-600: #2a1c35; /* darker shade for hover */
+  --accent-100: #bf9f63;
 
   --success-100: #e5f7ee;
   --success-500: #44a66e; /* success message */
@@ -31,5 +32,6 @@ export default createGlobalStyle`
   body {
     margin: 0;
     font-family: system-ui;
+    background-color: var(--background-100);
   }
 `;
