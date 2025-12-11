@@ -6,25 +6,22 @@ import FavoriteButton from "./FavouriteButton";
 import styled from "styled-components";
 
 export default function ActivityCard({
-  id,
-  title,
-  imageSource,
-  categories,
+  activity,
   toggleFavourite,
   isFavourite,
 }) {
   return (
     <div>
-      <p>{title}</p>
+      <p>{activity.title}</p>
       <FavoriteButton
         isFavourite={isFavourite}
-        id={id}
-        onClick={() => toggleFavourite(id)}
+        id={activity._id}
+        onClick={() => toggleFavourite(activity._id)}
       />
-      <Link href={`/activities/${id}`}>
-        <StyledImage src={imageSource} alt={title} width={1200} height={900} />
+      <Link href={`/activities/${activity._id}`}>
+        <StyledImage src={activity.imageUrl} alt={activity.title} width={1200} height={900} />
       </Link>
-      {categories.map((category) => (
+      {activity.categories.map((category) => (
         <p key={category._id}>{category.name}</p>
       ))}
     </div>
