@@ -2,6 +2,7 @@ import ActivityList from "@/components/ActivitiesList/ActivitiesList";
 import { useActivities } from "@/components/ActivitiesList/ActivitiesList";
 import BackButton from "@/components/BackButton";
 import { useFavourites } from "@/hooks/useFavourites";
+import styled from "styled-components";
 
 export default function FavouritesPage() {
   const { favourites, getIsFavourite } = useFavourites();
@@ -33,9 +34,16 @@ export default function FavouritesPage() {
 
   return (
     <>
-      <h1>Here you can find your favorite pieces</h1>
       <BackButton />
+      <FavouritesHeading>
+        Here you can find your favorite activities
+      </FavouritesHeading>
       <ActivityList activities={favouriteActivities} favourites={favourites} />
     </>
   );
 }
+
+const FavouritesHeading = styled.h2`
+  text-align: center;
+  color: var(--accent-500);
+`;

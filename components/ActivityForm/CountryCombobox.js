@@ -90,6 +90,7 @@ const StyledCountryInput = styled.input`
 
 const StyledCountryList = styled.ul`
   position: absolute;
+  top: 100%;
   z-index: 10;
   width: 100%;
   max-height: 200px;
