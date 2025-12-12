@@ -8,14 +8,15 @@ export default createGlobalStyle`
   --background-100: #d8f2e6;
   --background-200: #ffffff;
 
+  --accent-100: #bf9f63;
   --accent-500: #1e1226;
   --accent-600: #2a1c35; /* darker shade for hover */
-  --accent-100: #bf9f63;
 
   --success-100: #e5f7ee;
   --success-500: #44a66e; /* success message */
 
   --error-100: #f9dedc;
+  --error-300: #c64541;
   --error-500: #d9534f; /* error message */
 
   --grey-100: #f2f2f2;

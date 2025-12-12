@@ -55,12 +55,12 @@ export default function ActivityDetailPage() {
       {!isEditing && (
         <>
           <ActivityDetails id={id} activity={activity} />
-          <Actions>
+          <ButtonWrapper>
             <EditButton onClick={() => setIsEditing(true)}>Edit</EditButton>
             <DeleteButton onClick={() => setShowConfirmDelete(true)}>
               Delete
             </DeleteButton>
-          </Actions>
+          </ButtonWrapper>
         </>
       )}
 
@@ -73,7 +73,7 @@ export default function ActivityDetailPage() {
       )}
 
       {showConfirmDelete && (
-        <Actions>
+        <ButtonWrapper>
           <p>Are you sure you want to delete this activity?</p>
           <DeleteButton onClick={() => handleDeleteActivity(activity._id)}>
             Yes
@@ -81,7 +81,7 @@ export default function ActivityDetailPage() {
           <DeleteButton onClick={() => setShowConfirmDelete(false)}>
             No
           </DeleteButton>
-        </Actions>
+        </ButtonWrapper>
       )}
     </PageWrapper>
   );
@@ -91,7 +91,7 @@ const PageWrapper = styled.main`
   margin: 1rem;
 `;
 
-const Actions = styled.div`
+const ButtonWrapper = styled.section`
   display: flex;
   justify-content: flex-start;
   gap: 0.5rem;
@@ -117,6 +117,6 @@ const DeleteButton = styled(EditButton)`
   border-color: var(--error-500);
 
   &:hover {
-    background: #c64541;
+    background: var(--error-300);
   }
 `;
