@@ -1,4 +1,4 @@
-import { ActivityListProvider } from "@/components/ActivitiesList";
+import { ActivityListProvider } from "@/components/ActivitiesList/ActivitiesList";
 import ActivityForm from "@/components/ActivityForm/ActivityForm";
 import { StatusMessage } from "@/components/ActivityForm/StyledActivityForm";
 import { useRouter } from "next/router";

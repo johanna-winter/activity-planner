@@ -4,7 +4,7 @@ import styled from "styled-components";
 import css from "styled-jsx/css";
 
 export const Nav = styled.nav`
-  background-color: #7abfbf;
+  background-color: var(--primary-500);
   position: fixed;
   width: 100%;
   height: 80px;
@@ -33,17 +33,18 @@ export const NavItem = styled.li`
   width: 100%;
   height: 100%;
 
-  background-color: ${(props) => (props.$highlighted ? "#6bb0b0" : "#7abfbf")};
+  background-color: ${(props) =>
+    props.$highlighted ? "var(--primary-600)" : "var(--primary-500)"};
 
   &:hover {
-    background-color: #6bb0b0;
+    background-color: var(--primary-600);
     cursor: pointer;
   }
 `;
 
 export const NavLink = styled(Link)`
   text-decoration: none;
-  color: #1e1226;
+  color: var(--accent-500);
 
   display: flex;
   justify-content: center;
@@ -59,15 +60,15 @@ export const StyledHouse = styled(House)`
   stroke-width: 2;
 
   ${NavItem}:hover & {
-    stroke: #0d0d0d;
-    fill: #1e1226;
+    stroke: var(--accent-500);
+    fill: var(--accent-600);
   }
 
   ${(props) =>
     props.$highlighted &&
     css`
-      stroke: #0d0d0d;
-      fill: #1e1226;
+      stroke: var(--accent-600);
+      fill: var(--accent-500);
     `}
 `;
 
@@ -77,14 +78,14 @@ export const StyledHeart = styled(Heart)`
   stroke-width: 2;
 
   ${NavItem}:hover & {
-    stroke: #0d0d0d;
-    fill: #1e1226;
+    stroke: var(--accent-600);
+    fill: var(--accent-500);
   }
 
   ${(props) =>
     props.$highlighted &&
     css`
-      stroke: #0d0d0d;
-      fill: #1e1226;
+      stroke: var(--accent-600);
+      fill: var(--accent-500);
     `}
 `;

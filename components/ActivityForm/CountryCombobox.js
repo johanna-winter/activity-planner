@@ -72,6 +72,9 @@ export default function CountryCombobox({ options }) {
 const CountryWrapper = styled.div`
   position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 `;
 
 const StyledCountryLabel = styled.label`
@@ -81,16 +84,19 @@ const StyledCountryLabel = styled.label`
 const StyledCountryInput = styled.input`
   width: 100%;
   padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--primary-500);
 `;
 
 const StyledCountryList = styled.ul`
   position: absolute;
+  top: 100%;
   z-index: 10;
   width: 100%;
   max-height: 200px;
   overflow-y: auto;
   background: white;
-  border: 1px solid #ccc;
+  border: 1px solid var(--grey-300);
   border-radius: 6px;
   padding: 0;
   margin: 4px 0 0;
@@ -102,11 +108,11 @@ const StyledCountryItem = styled.li`
   cursor: pointer;
 
   &:hover {
-    background: #f2f2f2;
+    background: var(--grey-100);
   }
 `;
 
 const NoResults = styled.li`
   padding: 0.5rem;
-  color: #888;
+  color: var(--grey-700);
 `;

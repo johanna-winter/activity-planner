@@ -56,12 +56,11 @@ export default function WeatherInfo({ location }) {
 }
 
 const WeatherWrapper = styled.section`
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 8px;
+  background: var(--success-100);
+  border-left: 5px solid var(--primary-600);
+  border-radius: 12px;
   padding: 1rem;
-  max-width: 250px;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 `;
 
 const Header = styled.h3`

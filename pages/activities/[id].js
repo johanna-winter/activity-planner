@@ -3,6 +3,7 @@ import ActivityForm from "@/components/ActivityForm/ActivityForm";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";
+import styled from "styled-components";
 
 export default function ActivityDetailPage() {
   const router = useRouter();
@@ -50,13 +51,16 @@ export default function ActivityDetailPage() {
   }
 
   return (
-    <div>
+    <PageWrapper>
       {!isEditing && (
         <>
           <ActivityDetails id={id} activity={activity} />
-
-          <button onClick={() => setIsEditing(true)}>Edit</button>
-          <button onClick={() => setShowConfirmDelete(true)}>Delete</button>
+          <ButtonWrapper>
+            <EditButton onClick={() => setIsEditing(true)}>Edit</EditButton>
+            <DeleteButton onClick={() => setShowConfirmDelete(true)}>
+              Delete
+            </DeleteButton>
+          </ButtonWrapper>
         </>
       )}
 
@@ -69,14 +73,50 @@ export default function ActivityDetailPage() {
       )}
 
       {showConfirmDelete && (
-        <div>
+        <ButtonWrapper>
           <p>Are you sure you want to delete this activity?</p>
-          <button onClick={() => handleDeleteActivity(activity._id)}>
+          <DeleteButton onClick={() => handleDeleteActivity(activity._id)}>
             Yes
-          </button>
-          <button onClick={() => setShowConfirmDelete(false)}>No</button>
-        </div>
+          </DeleteButton>
+          <DeleteButton onClick={() => setShowConfirmDelete(false)}>
+            No
+          </DeleteButton>
+        </ButtonWrapper>
       )}
-    </div>
+    </PageWrapper>
   );
 }
+
+const PageWrapper = styled.main`
+  margin: 1rem;
+`;
+
+const ButtonWrapper = styled.section`
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  margin: 2rem 0;
+`;
+
+const EditButton = styled.button`
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--accent-500);
+  background: var(--accent-500);
+  color: var(--background-200);
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--accent-600);
+  }
+`;
+
+const DeleteButton = styled(EditButton)`
+  background: var(--error-500);
+  border-color: var(--error-500);
+
+  &:hover {
+    background: var(--error-300);
+  }
+`;

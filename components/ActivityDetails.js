@@ -16,11 +16,11 @@ export default function ActivityDetails({ activity, id }) {
 
   return (
     <StyledMain>
-      <FavoriteButton
+      <ActivityInfo
+        activity={activity}
         isFavourite={isFavourite}
         onClick={() => toggleFavourite(id)}
       />
-      <ActivityInfo activity={activity} />
       <WeatherInfo location={location} />
     </StyledMain>
   );
